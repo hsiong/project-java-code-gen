@@ -51,8 +51,8 @@ public class DbConnector {
         // The following statement is a try-with-resources statement, 
         // which declares one resource, stmt, that will be automatically closed when the try block terminates
         List<TableStructureBO> boList = new ArrayList<>();
+        String tableName = paramBO.getTableName();
         try (Statement statement = connection.createStatement()) {
-            String tableName = paramBO.getTableName();
             String queryTableSql = dbEnum.getQueryStructureSql(tableName);
             ResultSet resultSet = statement.executeQuery(queryTableSql);
             while (resultSet.next()) {
@@ -62,6 +62,10 @@ public class DbConnector {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        
+        if (boList.size() == 0) {
+            throw new IllegalArgumentException("Table Not Exist! " + tableName);
         }
 
         return boList;
