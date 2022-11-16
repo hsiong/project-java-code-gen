@@ -83,19 +83,21 @@ public class TableStructureJavaBO {
      * column description
      */
     private String column_description;
-    
-    
 
-    public void setJava_column_name(String java_column_name) {
-        this.java_column_name = underlineToCamel(java_column_name);
+    /**
+     * rewrite setJava_column_name, convert column_name to java_column_name
+     * @param column_name table column_name
+     */
+    public void setJava_column_name(String column_name) {
+        this.java_column_name = underlineToCamel(column_name);
     }
 
     /**
      * 将下划线命名转化成驼峰
      *
      * https://www.delftstack.com/zh/howto/java/how-to-capitalize-the-first-letter-of-a-string-in-java/
-     * @param param
-     * @return
+     * @param param input
+     * @return output
      */
     private String underlineToCamel(String param) {
         String[] strings = param.split("_");

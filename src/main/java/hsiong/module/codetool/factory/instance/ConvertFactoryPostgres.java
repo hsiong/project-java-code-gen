@@ -23,9 +23,9 @@ public class ConvertFactoryPostgres implements ConvertFactory {
     }
 
     /**
-     * convert postgres sructure to Java
-     * @param postgresDataType
-     * @return
+     * convert Postgres sructure to Java 
+     * @param postgresDataType Postgres data type
+     * @return Java data type
      */
     private String convertPostgresSructureToJava(String postgresDataType) {
         // TODO: convertPostgresSructureToJava

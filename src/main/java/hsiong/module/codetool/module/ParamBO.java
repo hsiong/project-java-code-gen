@@ -57,6 +57,10 @@ public class ParamBO {
     @GenNotEmpty
     private String tableName;
 
+    /**
+     * rewrite setDbEnum(), check dbEnum value while setting dbEnum
+     * @param dbEnum dbEnum
+     */
     public void setDbEnum(DbEnum dbEnum) {
         if (!DbEnum.getSupportedDbEnumList().contains(dbEnum)) {
             throw new IllegalArgumentException("NOT SUPPORT DATABASE");
@@ -64,6 +68,12 @@ public class ParamBO {
         this.dbEnum = dbEnum;
     }
 
+    /**
+     * rewrite setDbUrl(), set dbUrl by dbUrl & dbEnum & database
+     * @param dbUrl dbUrl
+     * @param dbEnum dbEnum
+     * @param database database
+     */
     public void setDbUrl(String dbUrl, DbEnum dbEnum, String database) {
         String url = "jdbc:" + dbEnum.getDbType() + "://" + dbUrl + "/" + database;
         this.dbUrl = url;

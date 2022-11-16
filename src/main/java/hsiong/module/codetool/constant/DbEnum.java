@@ -59,6 +59,11 @@ public enum DbEnum {
         }
     }
 
+    /**
+     * rewrite getQueryStructureSql
+     * @param tableName
+     * @return return queryStructureSql 
+     */
     public String getQueryStructureSql(String tableName) {
         queryStructureSql = queryStructureSql.replace(":tableName", tableName);
         return queryStructureSql;

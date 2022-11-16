@@ -41,8 +41,8 @@ public class TableInfoBO {
     }
 
     /**
-     * 获取输出路径
-     * @return
+     * rewrite getOutputDir
+     * @return 获取输出路径
      */
     public String getOutputDir() {
         if (this.outputDir == null) {
@@ -56,8 +56,8 @@ public class TableInfoBO {
     }
 
     /**
-     * 获取模板路径
-     * @return
+     * rewrite getTemplateDir
+     * @return 获取模板路径
      */
     public String getTemplateDir() {
         if (this.templateDir == null) {
@@ -71,19 +71,7 @@ public class TableInfoBO {
     }
 
     /**
-     * 获取模板路径下的所有文件
-     * @return
-     */
-    public List<File> getTemplateFile() {
-        String tempDir = getTemplateDir();
-        File file = new File(tempDir);
-
-        List<File> tempList = listAllFile(file);
-        return tempList;
-    }
-
-    /**
-     * 数据非空处理
+     * init tableInfoBo variables
      */
     public void setInfo(String tableName) {
         if (this.getPackageName() == null) {
@@ -98,8 +86,20 @@ public class TableInfoBO {
     }
 
     /**
-     * 获取当前 resource 路径
-     * @return
+     * list all matched files in TemplateDir
+     * @return 获取模板路径下的所有文件
+     */
+    public List<File> listTemplateFile() {
+        String tempDir = getTemplateDir();
+        File file = new File(tempDir);
+
+        List<File> tempList = listAllFile(file);
+        return tempList;
+    }
+
+    /**
+     * get project-resource absolute path
+     * @return 获取当前 resource 绝对路径
      */
     private String getResourceDir() {
         File file = new File("src/main/resource");
@@ -108,9 +108,9 @@ public class TableInfoBO {
     }
 
     /**
-     * 递归获取文件夹下所有文件
-     * @param parent
-     * @return
+     * using interation to list all files in aim director
+     * @param parent aim director
+     * @return 递归获取文件夹下所有文件
      */
     private List<File> listAllFile(File parent) {
         // only read files which match the Reg "i$"
@@ -131,11 +131,9 @@ public class TableInfoBO {
     }
 
     /**
-     * 将下划线命名转化成 EntityName
-     *
-     * https://www.delftstack.com/zh/howto/java/how-to-capitalize-the-first-letter-of-a-string-in-java/
-     * @param param
-     * @return
+     * convert underline name to EntityName
+     * @param param underline name
+     * @return 将下划线命名转化成 EntityName
      */
     private String underlineToEntityName(String param) {
         String[] strings = param.split("_");

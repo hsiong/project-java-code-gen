@@ -38,7 +38,7 @@ public class FreeMarkerUtil {
             }
 
             // execute freeMarker
-            List<File> templateFiles = tableInfoBO.getTemplateFile();
+            List<File> templateFiles = tableInfoBO.listTemplateFile();
             String outputDir = tableInfoBO.getOutputDir();
             String tempDir = tableInfoBO.getTemplateDir();
             for (File templateFile : templateFiles) {
