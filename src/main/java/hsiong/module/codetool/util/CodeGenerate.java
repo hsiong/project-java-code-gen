@@ -9,9 +9,11 @@ package hsiong.module.codetool.util; /**
  * 作者姓名           修改时间           版本号              描述
  */
 
+import hsiong.module.codetool.constant.DbEnum;
 import hsiong.module.codetool.module.ParamBO;
 import hsiong.module.codetool.module.TableInfoBO;
 import hsiong.module.codetool.module.TableStructureBO;
+import hsiong.module.codetool.module.TableStructureJavaBO;
 
 import java.util.List;
 
@@ -24,20 +26,30 @@ import java.util.List;
  */
 public class CodeGenerate {
 
+    /**
+     * 生成代码文件
+     * @param paramBO
+     * @param tableInfoBO
+     */
     public static void codeGenerate(ParamBO paramBO, TableInfoBO tableInfoBO) {
 
+        // get table structure
         List<TableStructureBO> stuctureBOList = DbConnector.getDbInfo(paramBO);
 
+        // convert structure to java
+        DbEnum dbEnum = paramBO.getDbEnum();
+        List<TableStructureJavaBO> list = dbEnum.getConvertFactory().convertStructureToJava(stuctureBOList);
+
+        // execute FreeMarker
         if (tableInfoBO.getEntityName() == null) {
-            tableInfoBO.setEntityName(ReflectUtil.underlineToCamel(paramBO.getTableName()));
+            tableInfoBO.setEntityNameFromTableName(paramBO.getTableName());
         }
-        if (tableInfoBO.getPackageName() == null) {
-            // default packageName is entityName.toLowerCase()
-            tableInfoBO.setPackageName(tableInfoBO.getEntityName().toLowerCase());
-        }
-        FreeMarkerUtil.generateFreeMarker(tableInfoBO, stuctureBOList);
+        tableInfoBO.setInfo(paramBO.getTableName());
+        FreeMarkerUtil.executeFreeMarker(tableInfoBO, list);
 
     }
+
+
     
     
 

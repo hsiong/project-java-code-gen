@@ -20,9 +20,7 @@ import lombok.Data;
  * @since 1.0.0
  */
 @Data
-public class TableStructureBO {
-
-   ${test}
+public class TableStructureJavaBO {
 
     /**
      * 字段在表的位置
@@ -35,9 +33,19 @@ public class TableStructureBO {
     private String column_name;
 
     /**
+     * java 字段名
+     */
+    private String java_column_name;
+
+    /**
      * 字段类型
      */
     private String data_type;
+
+    /**
+     * java 字段类型
+     */
+    private String java_data_type;
 
     /**
      * 字段长度
@@ -74,7 +82,33 @@ public class TableStructureBO {
     /**
      * column description
      */
-    private String description;
+    private String column_description;
     
+    
+
+    public void setJava_column_name(String java_column_name) {
+        this.java_column_name = underlineToCamel(java_column_name);
+    }
+
+    /**
+     * 将下划线命名转化成驼峰
+     *
+     * https://www.delftstack.com/zh/howto/java/how-to-capitalize-the-first-letter-of-a-string-in-java/
+     * @param param
+     * @return
+     */
+    private String underlineToCamel(String param) {
+        String[] strings = param.split("_");
+        StringBuilder builder = new StringBuilder();
+        builder.append(strings[0]);
+        if (strings.length > 1) {
+            for (int i = 1; i < strings.length; i++) {
+                String temp = strings[i];
+                builder.append(Character.toUpperCase(temp.charAt(0)));
+                builder.append(temp, 1, temp.length());
+            }
+        }
+        return builder.toString();
+    }
 
 }

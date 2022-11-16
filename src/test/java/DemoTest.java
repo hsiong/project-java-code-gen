@@ -30,8 +30,6 @@ public class DemoTest {
 
     @Test
     public void mainTest() {
-        String outDir = "./target";
-        String templateDir = "codetool";
 
         // 数据库链接信息
         ParamBO paramBO = new ParamBO();
@@ -44,6 +42,9 @@ public class DemoTest {
         
         // 生成信息
         TableInfoBO tableInfoBO = new TableInfoBO();
+        tableInfoBO.setBasePackage("demo.dir");
+        tableInfoBO.setPackageName("codetool");
+        tableInfoBO.setEntityName("TestEntity");
         CodeGenerate.codeGenerate(paramBO, tableInfoBO);
         
 

@@ -72,7 +72,6 @@ public class TableStructureBO {
     /**
      * column description
      */
-    private String description;
+    private String column_description;
     
-
 }

@@ -68,6 +68,7 @@ public class DbConnector {
     }
 
     /**
+     * 解析 ResultSet
      * @param resultSet
      * @param tClass
      * @param <T>
@@ -86,7 +87,7 @@ public class DbConnector {
         for (Field field : fields) {
             field.setAccessible(true);
             String fieldName = field.getName();
-            String fieldSqlName = ReflectUtil.camelToUnderline(fieldName);
+            String fieldSqlName = camelToUnderline(fieldName);
             Object value = resultSet.getObject(fieldSqlName);
             try {
                 field.set(t, String.valueOf(value));
@@ -97,8 +98,28 @@ public class DbConnector {
         }
 
         return t;
+    }
 
-
+    /**
+     * 将驼峰命名转化成下划线
+     *
+     * @param param
+     * @return
+     */
+    private static String camelToUnderline(String param) {
+        if (param.length() < 3) {
+            return param.toLowerCase();
+        }
+        StringBuilder sb = new StringBuilder(param);
+        int temp = 0;//定位
+        //从第三个字符开始 避免命名不规范
+        for (int i = 2; i < param.length(); i++) {
+            if (Character.isUpperCase(param.charAt(i))) {
+                sb.insert(i + temp, "_");
+                temp += 1;
+            }
+        }
+        return sb.toString().toLowerCase();
     }
 
 }

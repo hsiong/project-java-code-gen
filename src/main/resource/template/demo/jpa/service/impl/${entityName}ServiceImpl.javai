@@ -1,0 +1,79 @@
+package ${basePackage}.${packageName}.service.impl;
+
+
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
+import test.common.core.entity.${entityName}Entity;
+import test.common.core.response.ResPagingBody;
+import test.common.core.util.GisSqlUtil;
+import ${basePackage}.${packageName}.mapper.${entityName}Dao;
+import ${basePackage}.${packageName}.module.${entityName}ListDTO;
+import ${basePackage}.${packageName}.module.${entityName}SaveDTO;
+import ${basePackage}.${packageName}.module.${entityName}UpdateDTO;
+import ${basePackage}.${packageName}.module.${entityName}VO;
+import ${basePackage}.${packageName}.service.${entityName}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+/**
+ * 〈〉
+ *
+ * @author Hsiong
+ * @version 1.0.0
+ * @since 2022/8/17
+ */
+@Service
+public class ${entityName}ServiceImpl implements ${entityName}Service {
+    
+    @Autowired
+    private ${entityName}Dao ${entityName?uncap_first}Dao;
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void save(${entityName}SaveDTO dto) {
+        String serial = dto.getSerial();
+        List<${entityName}Entity> ${entityName?uncap_first}EntityList = ${entityName?uncap_first}Dao.findAll();
+        if (ObjectUtil.isNotEmpty(${entityName?uncap_first}EntityList)) {
+            throw new IllegalArgumentException("数据已存在!" + serial);
+        }
+        ${entityName}Entity ${entityName?uncap_first}Entity = new ${entityName}Entity();
+        BeanUtil.copyProperties(dto, ${entityName?uncap_first}Entity);
+        ${entityName?uncap_first}Dao.save(${entityName?uncap_first}Entity);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void update(${entityName}UpdateDTO dto) {
+        Optional<${entityName}Entity> optional = ${entityName?uncap_first}Dao.findById(dto.getId());
+        if (!optional.isPresent()) {
+            throw new IllegalArgumentException("数据不存在!");
+        }
+        ${entityName}Entity entity = optional.get();
+        BeanUtil.copyProperties(dto, entity);
+        ${entityName?uncap_first}Dao.save(entity);
+    }
+    
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void delete(Long id) {
+        ${entityName?uncap_first}Dao.deleteById(id);
+    }
+    
+    @Override
+    public ResPagingBody<${entityName}VO> list(${entityName}ListDTO dto, Integer page, Integer rows) {
+        String sqlPrefix = " SELECT *  ";
+        String selectSql = " FROM ${tableName} ";
+        // fuzzy search
+        return GisSqlUtil.getInstance().pageDynamic(sqlPrefix, selectSql, ${entityName}ListVO.class, page, rows, dto);
+    }
+    
+
+}
