@@ -27,6 +27,14 @@ public class CodeGenerate {
     public static void codeGenerate(ParamBO paramBO, TableInfoBO tableInfoBO) {
 
         List<TableStructureBO> stuctureBOList = DbConnector.getDbInfo(paramBO);
+
+        if (tableInfoBO.getEntityName() == null) {
+            tableInfoBO.setEntityName(ReflectUtil.underlineToCamel(paramBO.getTableName()));
+        }
+        if (tableInfoBO.getPackageName() == null) {
+            // default packageName is entityName.toLowerCase()
+            tableInfoBO.setPackageName(tableInfoBO.getEntityName().toLowerCase());
+        }
         FreeMarkerUtil.generateFreeMarker(tableInfoBO, stuctureBOList);
 
     }

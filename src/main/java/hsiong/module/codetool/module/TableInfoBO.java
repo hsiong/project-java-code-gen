@@ -1,5 +1,6 @@
 package hsiong.module.codetool.module;
 
+import hsiong.module.codetool.annotation.GenNotEmpty;
 import hsiong.module.codetool.constant.RegConstant;
 import lombok.Data;
 
@@ -10,12 +11,28 @@ import java.util.regex.Pattern;
 
 @Data
 public class TableInfoBO {
-
-    private String basePackage;
-
+    
+    @GenNotEmpty
     private String templateDir;
 
+    @GenNotEmpty
     private String outputDir;
+
+    @GenNotEmpty
+    private String basePackage;
+    
+    /**
+     * 生成实体名, 可以为空
+     * default value: tableName -> camelize
+     * @return
+     */
+    private String entityName;
+    
+    private String packageName;
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
 
     public String getTemplateDir() {
         if (this.templateDir == null) {
@@ -30,7 +47,7 @@ public class TableInfoBO {
 
     public String getOutputDir() {
         if (this.outputDir == null) {
-            this.outputDir = getResourceDir() + "output";
+            this.outputDir = getResourceDir() + "output" + File.separator + this.entityName;
         }
         File file = new File(this.outputDir);
         if (!file.exists()) {
@@ -59,9 +76,12 @@ public class TableInfoBO {
     }
 
     private String getResourceDir() {
-        java.net.URL uri = this.getClass().getResource("/");
-        System.out.println(uri.getPath());
-        return uri.getPath();
+        File file = new File("src/main/resource");
+        String dir = file.getAbsolutePath() + File.separator;
+        System.out.println(dir);
+        return dir;
     }
+    
+    
 
 }

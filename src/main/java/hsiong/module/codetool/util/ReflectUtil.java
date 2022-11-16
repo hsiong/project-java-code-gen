@@ -49,25 +49,47 @@ public class ReflectUtil {
 
     /**
      * 将驼峰命名转化成下划线
-     *
-     * @param para
+     * 
+     * @param param
      * @return
      */
-    protected static String camelToUnderline(String para) {
-        if (para.length() < 3) {
-            return para.toLowerCase();
+    protected static String camelToUnderline(String param) {
+        if (param.length() < 3) {
+            return param.toLowerCase();
         }
-        StringBuilder sb = new StringBuilder(para);
+        StringBuilder sb = new StringBuilder(param);
         int temp = 0;//定位
         //从第三个字符开始 避免命名不规范
-        for (int i = 2; i < para.length(); i++) {
-            if (Character.isUpperCase(para.charAt(i))) {
+        for (int i = 2; i < param.length(); i++) {
+            if (Character.isUpperCase(param.charAt(i))) {
                 sb.insert(i + temp, "_");
                 temp += 1;
             }
         }
         return sb.toString().toLowerCase();
     }
+
+    /**
+     * 将下划线命名转化成驼峰
+     *
+     * https://www.delftstack.com/zh/howto/java/how-to-capitalize-the-first-letter-of-a-string-in-java/
+     * @param param
+     * @return
+     */
+    protected static String underlineToCamel(String param) {
+        String[] strings = param.split("_");
+        StringBuilder builder = new StringBuilder();
+        builder.append(strings[0]);
+        if (strings.length > 1) {
+            for (int i = 1; i < strings.length; i++) {
+                String temp = strings[i];
+                builder.append(Character.toUpperCase(temp.charAt(0)));
+                builder.append(temp, 1, temp.length());
+            }
+        }
+        return builder.toString();
+    }
+    
     
     /**
      * 内部类, 用于 Serializable 接口

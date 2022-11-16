@@ -9,6 +9,7 @@ import hsiong.module.codetool.module.TableInfoBO;
 import hsiong.module.codetool.module.TableStructureBO;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
@@ -34,8 +35,14 @@ public class FreeMarkerUtil {
         try {
             Map<String, Object> root = new HashMap<>();
             root.put("boList", stuctureBOList);
-            // TODO: test
-            root.put("test", "test");
+            Class c = tableInfoBO.getClass();
+            Field[] fields = c.getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                String fieldName = field.getName();
+                Object filedValue = field.get(tableInfoBO);
+                root.put(fieldName, filedValue);
+            }
 
             File[] files = tableInfoBO.getTemplateFile();
             String outputDir = tableInfoBO.getOutputDir();
@@ -50,6 +57,8 @@ public class FreeMarkerUtil {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TemplateException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
 

@@ -10,6 +10,7 @@
  */
 package hsiong.module.codetool.module;
 
+import hsiong.module.codetool.annotation.GenNotEmpty;
 import hsiong.module.codetool.constant.DbEnum;
 import lombok.Data;
 
@@ -26,28 +27,34 @@ public class ParamBO {
     /**
      * dbEnum
      */
+    @GenNotEmpty
     private DbEnum dbEnum;
 
     /**
      * 数据库连接地址
      */
+    @GenNotEmpty
     private String dbUrl;
 
     /**
      * 数据库名称
      */
+    @GenNotEmpty
     private String database;
 
     /**
      * 数据库用户和密码
      */
+    @GenNotEmpty
     private String user;
+    @GenNotEmpty
     private String password;
 
     /**
      * 数据库表名
      * @return
      */
+    @GenNotEmpty
     private String tableName;
 
     public void setDbEnum(DbEnum dbEnum) {
