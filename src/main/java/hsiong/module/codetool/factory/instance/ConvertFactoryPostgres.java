@@ -16,6 +16,7 @@ public class ConvertFactoryPostgres implements ConvertFactory {
     /**
      * init postgresConvertMap 
      * https://www.educative.io/answers/how-to-initialize-a-static-map-in-java
+     * https://blog.csdn.net/xiaojuge/article/details/101628157
      */
     private static final LinkedHashMap<String, String> postgresConvertMap;
     static {

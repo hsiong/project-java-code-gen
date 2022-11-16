@@ -57,7 +57,7 @@ public class DbConnector {
             ResultSet resultSet = statement.executeQuery(queryTableSql);
             while (resultSet.next()) {
                 // only one column
-                TableStructureBO tableStructureBO = getRet(resultSet, TableStructureBO.class);
+                TableStructureBO tableStructureBO = parseRet(resultSet, TableStructureBO.class);
                 boList.add(tableStructureBO);
             }
         } catch (SQLException e) {
@@ -79,7 +79,7 @@ public class DbConnector {
      * @return
      * @apiNote https://docs.oracle.com/javase/tutorial/jdbc/basics/processingsqlstatements.html
      */
-    private static <T> T getRet(ResultSet resultSet, Class<T> tClass) throws SQLException {
+    private static <T> T parseRet(ResultSet resultSet, Class<T> tClass) throws SQLException {
         T t = null;
         try {
             t = tClass.getDeclaredConstructor().newInstance();
