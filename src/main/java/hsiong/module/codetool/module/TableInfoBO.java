@@ -108,7 +108,7 @@ public class TableInfoBO {
     }
 
     /**
-     * using interation to list all files in aim director
+     * using recursive to list all files in aim director
      * @param parent aim director
      * @return 递归获取文件夹下所有文件
      */
