@@ -52,9 +52,10 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(${entityName}UpdateDTO dto) {
-        Optional<${entityName}PO> optional = ${entityName?uncap_first}Dao.findById(dto.getId());
+        Long id = dto.getId();
+        Optional<${entityName}PO> optional = ${entityName?uncap_first}Dao.findById(id);
         if (!optional.isPresent()) {
-            throw new IllegalArgumentException("${entityDesc}不存在!");
+            throw new IllegalArgumentException("${entityDesc}不存在! id: " + id);
         }
         ${entityName}PO entity = optional.get();
         BeanUtil.copyProperties(dto, entity);
