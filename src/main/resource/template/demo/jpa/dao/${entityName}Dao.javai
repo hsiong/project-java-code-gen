@@ -1,6 +1,6 @@
 package ${basePackage}.${packageName}.dao;
 
-import ${basePackage}.${packageName}.entity.${entityName}Entity;
+import ${basePackage}.${packageName}.entity.${entityName}PO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * @version 1.0.0
  * @since 2022/8/17
  */
-public interface ${entityName}Dao extends JpaRepository<${entityName}Entity,Long>, JpaSpecificationExecutor<${entityName}Entity> {
+public interface ${entityName}Dao extends JpaRepository<${entityName}PO,Long>, JpaSpecificationExecutor<${entityName}PO> {
     
 }

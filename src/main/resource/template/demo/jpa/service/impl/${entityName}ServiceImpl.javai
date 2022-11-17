@@ -3,7 +3,7 @@ package ${basePackage}.${packageName}.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
-import ${basePackage}.${packageName}.entity.${entityName}Entity;
+import ${basePackage}.${packageName}.entity.${entityName}PO;
 import ${basePackage}.${packageName}.response.ResPagingBody;
 import ${basePackage}.${packageName}.util.GisSqlUtil;
 import ${basePackage}.${packageName}.dao.${entityName}Dao;
@@ -40,11 +40,11 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     @Override
     public void save(${entityName}SaveDTO dto) {
         String serial = dto.getSerial();
-        List<${entityName}Entity> ${entityName?uncap_first}EntityList = ${entityName?uncap_first}Dao.findAll();
-        if (ObjectUtil.isNotEmpty(${entityName?uncap_first}EntityList)) {
+        List<${entityName}PO> ${entityName?uncap_first}List = ${entityName?uncap_first}Dao.findAll();
+        if (ObjectUtil.isNotEmpty(${entityName?uncap_first}List)) {
             throw new IllegalArgumentException("数据已存在!" + serial);
         }
-        ${entityName}Entity ${entityName?uncap_first}Entity = new ${entityName}Entity();
+        ${entityName} ${entityName?uncap_first}Entity = new ${entityName}();
         BeanUtil.copyProperties(dto, ${entityName?uncap_first}Entity);
         ${entityName?uncap_first}Dao.save(${entityName?uncap_first}Entity);
     }
@@ -52,11 +52,11 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(${entityName}UpdateDTO dto) {
-        Optional<${entityName}Entity> optional = ${entityName?uncap_first}Dao.findById(dto.getId());
+        Optional<${entityName}> optional = ${entityName?uncap_first}Dao.findById(dto.getId());
         if (!optional.isPresent()) {
             throw new IllegalArgumentException("数据不存在!");
         }
-        ${entityName}Entity entity = optional.get();
+        ${entityName} entity = optional.get();
         BeanUtil.copyProperties(dto, entity);
         ${entityName?uncap_first}Dao.save(entity);
     }
