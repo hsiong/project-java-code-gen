@@ -10,7 +10,7 @@ import ${basePackage}.${packageName}.dao.${entityName}Dao;
 import ${basePackage}.${packageName}.dto.${entityName}ListDTO;
 import ${basePackage}.${packageName}.dto.${entityName}SaveDTO;
 import ${basePackage}.${packageName}.dto.${entityName}UpdateDTO;
-import ${basePackage}.${packageName}.dto.${entityName}VO;
+import ${basePackage}.${packageName}.dto.${entityName}ListVO;
 import ${basePackage}.${packageName}.service.${entityName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -44,19 +44,19 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
         if (ObjectUtil.isNotEmpty(${entityName?uncap_first}List)) {
             throw new IllegalArgumentException("数据已存在!" + serial);
         }
-        ${entityName} ${entityName?uncap_first}Entity = new ${entityName}();
-        BeanUtil.copyProperties(dto, ${entityName?uncap_first}Entity);
-        ${entityName?uncap_first}Dao.save(${entityName?uncap_first}Entity);
+        ${entityName}PO ${entityName?uncap_first} = new ${entityName}PO();
+        BeanUtil.copyProperties(dto, ${entityName?uncap_first});
+        ${entityName?uncap_first}Dao.save(${entityName?uncap_first});
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void update(${entityName}UpdateDTO dto) {
-        Optional<${entityName}> optional = ${entityName?uncap_first}Dao.findById(dto.getId());
+        Optional<${entityName}PO> optional = ${entityName?uncap_first}Dao.findById(dto.getId());
         if (!optional.isPresent()) {
             throw new IllegalArgumentException("数据不存在!");
         }
-        ${entityName} entity = optional.get();
+        ${entityName}PO entity = optional.get();
         BeanUtil.copyProperties(dto, entity);
         ${entityName?uncap_first}Dao.save(entity);
     }
@@ -68,7 +68,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     }
     
     @Override
-    public ResPagingBody<${entityName}VO> list(${entityName}ListDTO dto, Integer page, Integer rows) {
+    public ResPagingBody<${entityName}ListVO> list(${entityName}ListDTO dto, Integer page, Integer rows) {
         String sqlPrefix = " SELECT *  ";
         String selectSql = " FROM ${tableName} ";
         // fuzzy search

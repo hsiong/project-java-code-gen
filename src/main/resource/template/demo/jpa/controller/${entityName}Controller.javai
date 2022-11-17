@@ -7,7 +7,7 @@ import ${basePackage}.${packageName}.util.ResUtil;
 import ${basePackage}.${packageName}.dto.${entityName}ListDTO;
 import ${basePackage}.${packageName}.dto.${entityName}SaveDTO;
 import ${basePackage}.${packageName}.dto.${entityName}UpdateDTO;
-import ${basePackage}.${packageName}.dto.${entityName}VO;
+import ${basePackage}.${packageName}.dto.${entityName}ListVO;
 import ${basePackage}.${packageName}.service.${entityName}Service;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -39,7 +39,7 @@ public class ${entityName}Controller {
         @ApiImplicitParam(name = "pageNumber", value = "第几页", required = true, dataType = "int", paramType = "query"),
         @ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int", paramType = "query")
     })
-    public BaseRes<ResPagingBody<${entityName}VO>> list(${entityName}ListDTO dto, @RequestParam(value = "pageNumber") Integer pageNumber, @RequestParam(value = "pageSize") Integer pageSize) {
+    public BaseRes<ResPagingBody<${entityName}ListVO>> list(${entityName}ListDTO dto, @RequestParam(value = "pageNumber") Integer pageNumber, @RequestParam(value = "pageSize") Integer pageSize) {
         return ResUtil.success(${entityName?uncap_first}Service.list(dto, pageNumber, pageSize));
     }
 

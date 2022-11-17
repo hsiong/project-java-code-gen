@@ -14,7 +14,7 @@ import test.common.common.core.entity.BaseEntity;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ${entityName}VO extends BaseEntity {
+public class ${entityName}ListVO extends BaseEntity {
 
     <#list columns as po>
         <#if po.java_column_name != 'id'
