@@ -42,7 +42,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
         String serial = dto.getSerial();
         List<${entityName}PO> ${entityName?uncap_first}List = ${entityName?uncap_first}Dao.findAll();
         if (ObjectUtil.isNotEmpty(${entityName?uncap_first}List)) {
-            throw new IllegalArgumentException("数据已存在!" + serial);
+            throw new IllegalArgumentException("${entityDesc}已存在!" + serial);
         }
         ${entityName}PO ${entityName?uncap_first} = new ${entityName}PO();
         BeanUtil.copyProperties(dto, ${entityName?uncap_first});
@@ -54,7 +54,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     public void update(${entityName}UpdateDTO dto) {
         Optional<${entityName}PO> optional = ${entityName?uncap_first}Dao.findById(dto.getId());
         if (!optional.isPresent()) {
-            throw new IllegalArgumentException("数据不存在!");
+            throw new IllegalArgumentException("${entityDesc}不存在!");
         }
         ${entityName}PO entity = optional.get();
         BeanUtil.copyProperties(dto, entity);
