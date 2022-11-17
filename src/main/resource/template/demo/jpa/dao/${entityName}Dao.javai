@@ -1,6 +1,6 @@
-package ${basePackage}.${packageName}.mapper;
+package ${basePackage}.${packageName}.dao;
 
-import test.common.core.entity.${entityName}Entity;
+import ${basePackage}.${packageName}.entity.${entityName}Entity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

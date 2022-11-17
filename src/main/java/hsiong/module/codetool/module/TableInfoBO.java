@@ -46,7 +46,7 @@ public class TableInfoBO {
      */
     public String getOutputDir() {
         if (this.outputDir == null) {
-            this.outputDir = getResourceDir() + "output" + File.separator + this.entityName.toLowerCase(Locale.ROOT);
+            this.outputDir = getResourceDir() + "output" + File.separator + this.packageName.toLowerCase(Locale.ROOT);
         }
         File file = new File(this.outputDir);
         if (!file.exists()) {

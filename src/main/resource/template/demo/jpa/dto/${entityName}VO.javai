@@ -1,12 +1,12 @@
-package ${basePackage}.${packageName}.module;
+package ${basePackage}.${packageName}.dto;
 
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
 import javax.validation.constraints.NotBlank;
+import test.common.common.core.entity.BaseEntity;
 
 /**
  * @Description: ${entityName?uncap_first} 列表
@@ -14,13 +14,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ${entityName}UpdateDTO {
-    
-    @ApiModelProperty(value = "ID")
-    @NotBlank(message = "ID 不能为空")
-    private Long id;
+public class ${entityName}VO extends BaseEntity {
 
-  <#list columns as po>
+    <#list columns as po>
         <#if po.java_column_name != 'id'
             && po.java_column_name != 'createBy'
             && po.java_column_name != 'createTime'

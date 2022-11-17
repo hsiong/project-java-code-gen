@@ -1,18 +1,25 @@
-package ${basePackage}.${packageName}.module;
+package ${basePackage}.${packageName}.entity;
 
-
-import io.swagger.annotations.ApiModelProperty;
+import test.common.common.core.entity.BaseEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import java.time.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
+import test.common.common.core.entity.BaseEntity;
 
 /**
- * @Description: ${entityName?uncap_first} 列表
+ *
+ * @Inherited 这些注解都没有使用 @Inherited , 可以放心继承
+ * @date: 2021/11/30
+ * @version: 1.0
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-public class ${entityName}VO extends BaseEntity {
+public class ${entityName}ListDTO extends BaseEntity implements Serializable {
 
     <#list columns as po>
         <#if po.java_column_name != 'id'
@@ -32,17 +39,10 @@ public class ${entityName}VO extends BaseEntity {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
             </#if>
-    @ApiModelProperty(value = "${po.column_description}"<#if po.is_nullable == 'NO'>, required = true</#if>)
-            <#if po.is_nullable == 'NO'>
-                <#if po.java_data_type=='java.lang.String'>
-    @NotBlank(message = "${po.column_description} 不能为空")
-                <#else>
-    @NotNull(message = "${po.column_description} 不能为空")
-                </#if>
-            </#if>
+    @ApiModelProperty(value = "${po.column_description}")
     private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};
 
         </#if>
     </#list>
-
+    
 }

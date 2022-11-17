@@ -42,9 +42,10 @@ public class DemoTest {
         
         // 生成信息
         TableInfoBO tableInfoBO = new TableInfoBO();
-        tableInfoBO.setBasePackage("demo.dir");
-        tableInfoBO.setPackageName("codetool");
-        tableInfoBO.setEntityName("TestEntity");
+        tableInfoBO.setBasePackage("com.yngishere.service");
+        tableInfoBO.setPackageName("species");
+        tableInfoBO.setEntityName("CmsSpecies");
+        tableInfoBO.setEntityDesc("物种管理表");
         CodeGenerate.codeGenerate(paramBO, tableInfoBO);
         
 

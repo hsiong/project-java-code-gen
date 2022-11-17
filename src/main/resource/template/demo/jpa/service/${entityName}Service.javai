@@ -1,11 +1,11 @@
 package ${basePackage}.${packageName}.service;
 
 
-import test.common.core.response.ResPagingBody;
-import ${basePackage}.${packageName}.module.${entityName}ListDTO;
-import ${basePackage}.${packageName}.module.${entityName}SaveDTO;
-import ${basePackage}.${packageName}.module.${entityName}UpdateDTO;
-import ${basePackage}.${packageName}.module.${entityName}VO;
+import ${basePackage}.${packageName}.response.ResPagingBody;
+import ${basePackage}.${packageName}.dto.${entityName}ListDTO;
+import ${basePackage}.${packageName}.dto.${entityName}SaveDTO;
+import ${basePackage}.${packageName}.dto.${entityName}UpdateDTO;
+import ${basePackage}.${packageName}.dto.${entityName}VO;
 
 /**
  * 〈〉

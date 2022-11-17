@@ -56,8 +56,6 @@ public class ConvertFactoryPostgres implements ConvertFactory {
             javaBO.setJava_data_type(javaDataType);
             return javaBO;
         }).collect(Collectors.toList());
-        System.out.println("javaBOList");
-        System.out.println(javaBOList);
         return javaBOList;
     }
 
