@@ -45,13 +45,6 @@ public class ${entityName}PO extends BaseEntity implements Serializable {
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
             </#if>
     @ApiModelProperty(value = "${po.column_description}"<#if po.is_nullable == 'NO'>, required = true</#if>)
-            <#if po.is_nullable == 'NO'>
-                <#if po.java_data_type=='java.lang.String'>
-    @NotBlank(message = "${po.column_description} 不能为空")
-                <#else>
-    @NotNull(message = "${po.column_description} 不能为空")
-                </#if>
-            </#if>
     @Column(<#if po.is_nullable == 'NO'>nullable = false<#else>nullable = true</#if><#if po.character_maximum_length!='null'>, length=${po.character_maximum_length}</#if><#if po.numeric_precision!='null'>, precision=${po.numeric_precision}</#if><#if po.numeric_scale!='null'>, scale=${po.numeric_scale}</#if>)
     private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};
 
