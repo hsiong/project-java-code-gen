@@ -1,4 +1,4 @@
-package ${basePackage}.${packageName}.entity;
+package ${basePackage}.${packageName}.dto;
 
 import test.common.common.core.entity.BaseEntity;
 import lombok.Data;

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Accessors(chain = true)
 public class ${entityName}UpdateDTO extends ${entityName}SaveDTO {
     
-    @ApiModelProperty(value = "ID")
+    @ApiModelProperty(value = "ID", required = true)
     @NotNull(message = "ID 不能为空")
     private Long id;
     

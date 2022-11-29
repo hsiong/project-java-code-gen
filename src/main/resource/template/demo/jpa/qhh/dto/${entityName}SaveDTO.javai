@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  */
@@ -33,7 +34,7 @@ public class ${entityName}SaveDTO {
         @JSONField(format = "yyyy-MM-dd HH:mm:ss")
         @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
                 </#if>
-        @ApiModelProperty(value = "${po.column_description}"<#if po.is_nullable == 'NO'>, required = true</#if>)
+        @ApiModelProperty(value = "${po.column_description} <#if po.is_nullable == 'NO'>不能为空</#if>"<#if po.is_nullable == 'NO'>, required = true</#if>)
                 <#if po.is_nullable == 'NO'>
                     <#if po.java_data_type=='java.lang.String'>
         @NotBlank(message = "${po.column_description} 不能为空")
