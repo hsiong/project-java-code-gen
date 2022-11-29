@@ -6,11 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 @Data
 @NoArgsConstructor
@@ -20,18 +26,19 @@ public class TableInfoBO {
     private String basePackage;
 
     private String packageName;
-    
+
     private String templateDir;
 
     private String outputDir;
-    
+
     /**
      * 生成实体名, 可以为空
      * default value: tableName -> camelize
+     *
      * @return
      */
     private String entityName;
-    
+
     private String entityDesc;
 
     private String tableName;
@@ -42,21 +49,32 @@ public class TableInfoBO {
 
     /**
      * rewrite getOutputDir
+     *
      * @return 获取输出路径
      */
     public String getOutputDir() {
         if (this.outputDir == null) {
-            this.outputDir = getResourceDir() + "output" + File.separator + this.packageName.toLowerCase(Locale.ROOT);
+            this.outputDir = getResourceDir() + "output";
+            // clear default output dir
+            Path path = Paths.get(this.outputDir);
+            try (Stream<Path> walk = Files.walk(path)) {
+                walk.sorted(Comparator.reverseOrder()).forEach(this::deleteDirectoryStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+        this.outputDir = this.outputDir + File.separator + this.packageName.toLowerCase(Locale.ROOT);
         File file = new File(this.outputDir);
         if (!file.exists()) {
             file.mkdirs();
         }
-        return outputDir;
+        return this.outputDir;
     }
 
     /**
      * rewrite getTemplateDir
+     *
      * @return 获取模板路径
      */
     public String getTemplateDir() {
@@ -87,6 +105,7 @@ public class TableInfoBO {
 
     /**
      * list all matched files in TemplateDir
+     *
      * @return 获取模板路径下的所有文件
      */
     public List<File> listTemplateFile() {
@@ -99,6 +118,7 @@ public class TableInfoBO {
 
     /**
      * get project-resource absolute path
+     *
      * @return 获取当前 resource 绝对路径
      */
     private String getResourceDir() {
@@ -109,6 +129,7 @@ public class TableInfoBO {
 
     /**
      * using recursive to list all files in aim director
+     *
      * @param parent aim director
      * @return 递归获取文件夹下所有文件
      */
@@ -124,7 +145,7 @@ public class TableInfoBO {
                 List<File> temps = listAllFile(directory);
                 totalTemps.addAll(temps);
             }
-        } else if (m.find()){
+        } else if (m.find()) {
             totalTemps.add(parent);
         }
         return totalTemps;
@@ -132,6 +153,7 @@ public class TableInfoBO {
 
     /**
      * convert underline name to EntityName
+     *
      * @param param underline name
      * @return 将下划线命名转化成 EntityName
      */
@@ -145,5 +167,13 @@ public class TableInfoBO {
         }
         return builder.toString();
     }
-    
+
+    private void deleteDirectoryStream(Path path) {
+        try {
+            Files.delete(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
