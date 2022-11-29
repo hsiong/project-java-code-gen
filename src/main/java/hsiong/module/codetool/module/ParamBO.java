@@ -12,7 +12,7 @@ package hsiong.module.codetool.module;
 
 import hsiong.module.codetool.annotation.GenNotEmpty;
 import hsiong.module.codetool.constant.DbEnum;
-import lombok.Data;
+import lombok.Getter;
 
 /**
  * 〈〉
@@ -21,7 +21,7 @@ import lombok.Data;
  * @create 2022/4/20
  * @since 1.0.0
  */
-@Data
+@Getter
 public class ParamBO {
 
     /**
@@ -37,18 +37,18 @@ public class ParamBO {
     private String dbUrl;
 
     /**
-     * 数据库名称
-     */
-    @GenNotEmpty
-    private String database;
-
-    /**
      * 数据库用户和密码
      */
     @GenNotEmpty
     private String user;
     @GenNotEmpty
     private String password;
+
+    /**
+     * 数据库名称
+     */
+    @GenNotEmpty
+    private String database;
 
     /**
      * 数据库表名
@@ -61,7 +61,7 @@ public class ParamBO {
      * rewrite setDbEnum(), check dbEnum value while setting dbEnum
      * @param dbEnum dbEnum
      */
-    public void setDbEnum(DbEnum dbEnum) {
+    private void setDbEnum(DbEnum dbEnum) {
         if (!DbEnum.getSupportedDbEnumList().contains(dbEnum)) {
             throw new IllegalArgumentException("NOT SUPPORT DATABASE");
         }
@@ -71,11 +71,20 @@ public class ParamBO {
     /**
      * rewrite setDbUrl(), set dbUrl by dbUrl & dbEnum & database
      * @param dbUrl dbUrl
-     * @param dbEnum dbEnum
-     * @param database database
      */
-    public void setDbUrl(String dbUrl, DbEnum dbEnum, String database) {
-        String url = "jdbc:" + dbEnum.getDbType() + "://" + dbUrl + "/" + database;
+    private void setDbUrl(String dbUrl) {
+        String url = "jdbc:" + this.dbEnum.getDbType() + "://" + dbUrl + "/" + this.database;
         this.dbUrl = url;
     }
+
+    public ParamBO(DbEnum dbEnum, String dbUrl, String user, String password, String database, String tableName) {
+        setDbEnum(dbEnum);
+        this.database = database;
+        this.user = user;
+        this.password = password;
+        this.tableName = tableName;
+        setDbUrl(dbUrl);
+    }
+    
+    
 }

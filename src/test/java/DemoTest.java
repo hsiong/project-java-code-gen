@@ -32,17 +32,16 @@ public class DemoTest {
     public void mainTest() {
 
         // 数据库链接信息
-        ParamBO paramBO = new ParamBO();
-        paramBO.setDbEnum(DbEnum.POSTGRESQL);
-        paramBO.setDatabase("database");
-        paramBO.setDbUrl("dbUrl", paramBO.getDbEnum(), paramBO.getDatabase());
-        paramBO.setUser("user");
-        paramBO.setPassword("pwd");
-        paramBO.setTableName("tableName");
+        ParamBO paramBO = new ParamBO(DbEnum.POSTGRESQL,
+                                      "dbUrl",
+                                      "user",
+                                      "pwd",
+                                      "database",
+                                      "tableName");
         
         // 生成信息
         TableInfoBO tableInfoBO = new TableInfoBO();
-        tableInfoBO.setBasePackage("com.yngishere.service");
+        tableInfoBO.setBasePackage("com.test.service");
         tableInfoBO.setPackageName("species");
         tableInfoBO.setEntityName("CmsSpecies");
         tableInfoBO.setEntityDesc("物种管理表");

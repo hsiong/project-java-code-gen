@@ -17,6 +17,7 @@ public class ConvertFactoryPostgres implements ConvertFactory {
      * init postgresConvertMap 
      * https://www.educative.io/answers/how-to-initialize-a-static-map-in-java
      * https://blog.csdn.net/xiaojuge/article/details/101628157
+     * https://www.cnblogs.com/pypua/articles/9907831.html
      */
     private static final LinkedHashMap<String, String> postgresConvertMap;
     static {
@@ -30,6 +31,7 @@ public class ConvertFactoryPostgres implements ConvertFactory {
         postgresConvertMap.put("text", JavaTypeConstant.JAVA_STRING);
         postgresConvertMap.put("smallint", JavaTypeConstant.JAVA_INTEGER);
         postgresConvertMap.put("integer", JavaTypeConstant.JAVA_INTEGER);
+        postgresConvertMap.put("bigint", JavaTypeConstant.JAVA_LONG);
         postgresConvertMap.put("int2", JavaTypeConstant.JAVA_INTEGER);
         postgresConvertMap.put("int4", JavaTypeConstant.JAVA_INTEGER);
         postgresConvertMap.put("int8", JavaTypeConstant.JAVA_LONG);
