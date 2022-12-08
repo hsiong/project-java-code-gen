@@ -1,6 +1,5 @@
 package ${basePackage}.${packageName}.dto;
 
-import test.common.common.core.entity.BaseEntity;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -10,7 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
-import test.common.common.core.entity.BaseEntity;
+import com.yngishere.common.core.entity.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -20,7 +19,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @version: 1.0
  */
 @Data
-public class ${entityName}ListDTO extends BaseEntity implements Serializable {
+public class ${entityName}ListDTO implements Serializable {
 
     <#list columns as po>
         <#if po.java_column_name != 'id'
