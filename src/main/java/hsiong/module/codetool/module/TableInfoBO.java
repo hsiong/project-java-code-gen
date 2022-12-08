@@ -2,6 +2,7 @@ package hsiong.module.codetool.module;
 
 import hsiong.module.codetool.annotation.GenNotEmpty;
 import hsiong.module.codetool.constant.RegConstant;
+import hsiong.module.codetool.util.CommonUtil;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -53,7 +54,7 @@ public class TableInfoBO {
      * @return 获取输出路径
      */
     public String getOutputDir() {
-        if (this.outputDir == null) {
+        if (CommonUtil.isEmpty(this.outputDir)) {
             this.outputDir = getResourceDir() + "output";
             // clear default output dir
             Path path = Paths.get(this.outputDir);
@@ -78,7 +79,7 @@ public class TableInfoBO {
      * @return 获取模板路径
      */
     public String getTemplateDir() {
-        if (this.templateDir == null) {
+        if (CommonUtil.isEmpty(this.templateDir)) {
             this.templateDir = getResourceDir() + "template";
         }
         File file = new File(this.templateDir);
@@ -92,11 +93,11 @@ public class TableInfoBO {
      * init tableInfoBo variables
      */
     public void setInfo(String tableName) {
-        if (this.getPackageName() == null) {
+        if (CommonUtil.isEmpty(this.getPackageName())) {
             // default packageName is entityName.toLowerCase()
             this.setPackageName(this.getEntityName().toLowerCase());
         }
-        if (this.getEntityDesc() == null) {
+        if (CommonUtil.isEmpty(this.getEntityDesc())) {
             // TODO: or perhaps using Table Comment ? 
             this.setEntityDesc("BaseDesc");
         }

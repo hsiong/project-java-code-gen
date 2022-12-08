@@ -41,7 +41,7 @@ public class CodeGenerate {
         List<TableStructureJavaBO> list = dbEnum.getConvertFactory().convertStructureToJava(stuctureBOList);
 
         // execute FreeMarker
-        if (tableInfoBO.getEntityName() == null || tableInfoBO.getEntityName().length() == 0) {
+        if (CommonUtil.isEmpty(tableInfoBO.getEntityName())) {
             tableInfoBO.setEntityNameFromTableName(paramBO.getTableName());
         }
         tableInfoBO.setInfo(paramBO.getTableName());
