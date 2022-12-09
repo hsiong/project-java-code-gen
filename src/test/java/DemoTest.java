@@ -40,11 +40,11 @@ public class DemoTest {
                                       "tableName");
         
         // 生成信息
-        TableInfoBO tableInfoBO = new TableInfoBO();
-        tableInfoBO.setBasePackage("com.test.service");
-        tableInfoBO.setPackageName("species");
-        tableInfoBO.setEntityName("CmsSpecies");
-        tableInfoBO.setEntityDesc("物种管理表");
+        TableInfoBO tableInfoBO = new TableInfoBO("com.weishan",
+                                                  "result",
+                                                  "",
+                                                  "识别结果",
+                                                  paramBO.getTableName());
         CodeGenerate.codeGenerate(paramBO, tableInfoBO);
         
 

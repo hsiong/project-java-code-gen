@@ -41,7 +41,6 @@ public class CodeGenerate {
         List<TableStructureJavaBO> list = dbEnum.getConvertFactory().convertStructureToJava(stuctureBOList);
 
         // execute FreeMarker
-        tableInfoBO.setInfo(paramBO.getTableName());
         FreeMarkerUtil.executeFreeMarker(tableInfoBO, list);
 
     }

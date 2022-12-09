@@ -4,7 +4,6 @@ import hsiong.module.codetool.annotation.GenNotEmpty;
 import hsiong.module.codetool.constant.RegConstant;
 import hsiong.module.codetool.util.CommonUtil;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +19,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 @Data
-@NoArgsConstructor
 public class TableInfoBO {
 
     @GenNotEmpty
@@ -44,11 +42,26 @@ public class TableInfoBO {
 
     private String tableName;
 
-    public void setEntityName(String entityName) {
+    public TableInfoBO(String basePackage, String packageName, String entityName, String entityDesc, String tableName) {
         if (CommonUtil.isEmpty(entityName)) {
             entityName = underlineToEntityName(tableName);
         }
+
+        if (CommonUtil.isEmpty(packageName)) {
+            // default packageName is entityName.toLowerCase()
+            packageName = this.getEntityName().toLowerCase();
+        }
+
+
+        if (CommonUtil.isEmpty(entityDesc)) {
+            // TODO: or perhaps using Table Comment ? 
+            throw new IllegalArgumentException("Entity Desc Can't be null");
+        }
         this.entityName = entityName;
+        this.packageName = packageName;
+        this.basePackage = basePackage;
+        this.entityDesc = entityDesc;
+        this.tableName = tableName;
     }
     
     /**
@@ -90,21 +103,6 @@ public class TableInfoBO {
             file.mkdirs();
         }
         return this.templateDir;
-    }
-
-    /**
-     * init tableInfoBo variables
-     */
-    public void setInfo(String tableName) {
-        if (CommonUtil.isEmpty(this.getPackageName())) {
-            // default packageName is entityName.toLowerCase()
-            this.setPackageName(this.getEntityName().toLowerCase());
-        }
-        if (CommonUtil.isEmpty(this.getEntityDesc())) {
-            // TODO: or perhaps using Table Comment ? 
-            throw new IllegalArgumentException("Entity Desc Can't be null");
-        }
-        this.setTableName(tableName);
     }
 
     /**
