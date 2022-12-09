@@ -44,10 +44,13 @@ public class TableInfoBO {
 
     private String tableName;
 
-    public void setEntityNameFromTableName(String tableName) {
-        this.entityName = underlineToEntityName(tableName);
+    public void setEntityName(String entityName) {
+        if (CommonUtil.isEmpty(entityName)) {
+            entityName = underlineToEntityName(tableName);
+        }
+        this.entityName = entityName;
     }
-
+    
     /**
      * rewrite getOutputDir
      *
