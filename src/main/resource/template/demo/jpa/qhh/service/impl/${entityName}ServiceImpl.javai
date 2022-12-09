@@ -73,29 +73,14 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     
     @Override
     public ResPagingBody<${entityName}ListVO> list(${entityName}ListDTO dto) {
-        Date startTime = dto.getStartTime();
-        Date endTime = dto.getEndTime();
-        String javaFormat = SqlDateTypeEnum.SECOND.getJavaFormat();
     
         String sqlPrefix = " SELECT *  ";
         String selectSql = " FROM ${tableName} ";
         String orderSql = " ORDER BY create_time DESC ";
-        
-        if (ObjectUtil.isNotEmpty(startTime)) {
-            String startTimeStr = DateUtil.format(startTime, javaFormat);
-            selectSql = selectSql +
-                       " AND create_time >= to_timestamp(':startTime', 'yyyy-mm-dd hh24:MI:SS') "
-                           .replace(":startTime", startTimeStr);
-        }
-        if (ObjectUtil.isNotEmpty(endTime)) {
-            String endTimeStr = DateUtil.format(endTime, javaFormat);
-            selectSql = selectSql +
-                       " AND create_time < to_timestamp(':endTime', 'yyyy-mm-dd hh24:MI:SS') "
-                           .replace(":endTime", endTimeStr);
-        }
+
         
         // fuzzy search
-        return GisSqlUtil.getInstance().pageDynamic(sqlPrefix, selectSql, ${entityName}ListVO.class, dto.getPageNumber(), dto.getPageSize(), dto, orderSql);
+        return GisSqlUtil.getInstance().pageDynamic(sqlPrefix, selectSql, ${entityName}ListVO.class, dto, orderSql);
     }
     
 
