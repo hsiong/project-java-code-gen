@@ -99,7 +99,7 @@ public class TableInfoBO {
         }
         if (CommonUtil.isEmpty(this.getEntityDesc())) {
             // TODO: or perhaps using Table Comment ? 
-            this.setEntityDesc("BaseDesc");
+            throw new IllegalArgumentException("Entity Desc Can't be null");
         }
         this.setTableName(tableName);
     }
