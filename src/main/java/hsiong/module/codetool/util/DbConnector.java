@@ -80,9 +80,9 @@ public class DbConnector {
      * @apiNote https://docs.oracle.com/javase/tutorial/jdbc/basics/processingsqlstatements.html
      */
     private static <T> T parseRet(ResultSet resultSet, Class<T> tClass) throws SQLException {
-        T t = null;
+        T o = null;
         try {
-            t = tClass.getDeclaredConstructor().newInstance();
+            o = tClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             String msg = String.format("New Instance %s Error: %s", tClass.getName(), e.getMessage());
             throw new IllegalArgumentException(msg);
@@ -94,14 +94,14 @@ public class DbConnector {
             String fieldSqlName = camelToUnderline(fieldName);
             Object value = resultSet.getObject(fieldSqlName);
             try {
-                field.set(t, String.valueOf(value));
+                field.set(o, String.valueOf(value));
             } catch (IllegalAccessException e) {
                 String msg = String.format("IllegalAccessException %s Error: %s", field.getName(), e.getMessage());
                 throw new IllegalArgumentException(msg);
             }
         }
 
-        return t;
+        return o;
     }
 
     /**
