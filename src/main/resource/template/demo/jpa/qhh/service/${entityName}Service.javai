@@ -39,7 +39,7 @@ public interface ${entityName}Service {
      * @param 
      * @return
      */
-    ResPagingBody<${entityName}ListVO> list(${entityName}ListDTO dto, Integer page, Integer rows);
+    ResPagingBody<${entityName}ListVO> list(${entityName}ListDTO dto);
     
 
 }

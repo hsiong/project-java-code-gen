@@ -40,7 +40,7 @@ public class ${entityName}Controller {
         @ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int", paramType = "query")
     })
     public BaseRes<ResPagingBody<${entityName}ListVO>> list(${entityName}ListDTO dto, @RequestParam(value = "pageNumber") Integer pageNumber, @RequestParam(value = "pageSize") Integer pageSize) {
-        return ResUtil.success(${entityName?uncap_first}Service.list(dto, pageNumber, pageSize));
+        return ResUtil.success(${entityName?uncap_first}Service.list(dto));
     }
 
     @ApiOperation(value = "保存${entityDesc}")

@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import com.yngishere.common.core.entity.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.yngishere.common.core.model.PageTimeListDTO;
 
 /**
  *
@@ -19,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @version: 1.0
  */
 @Data
-public class ${entityName}ListDTO implements Serializable {
+public class ${entityName}ListDTO extends PageTimeListDTO implements Serializable {
 
     <#list columns as po>
         <#if po.java_column_name != 'id'
