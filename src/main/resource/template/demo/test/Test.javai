@@ -11,8 +11,7 @@ public class Test {
     public void save${entityName}() {
         String url = domain + "/${entityName?uncap_first}";
         String param = " ";
-        System.out.println(HttpUtil.getInstance().sendPost(url, param, header));
-        
+        System.out.println(HttpPostUtil.getInstance().send(url, header, param));
     }
     
     @Test
@@ -20,20 +19,18 @@ public class Test {
         String url = domain + "/${entityName?uncap_first}";
         String param = " ";
         System.out.println(HttpUtil.getInstance().sendPut(url, param, header));
-        
     }
     
     @Test
     public void list${entityName}() {
         String url = domain + "/${entityName?uncap_first}";
-        System.out.println(HttpUtil.getInstance().sendGet(url, null, header));
-        
+        System.out.println(HttpGetUtil.getInstance().send(url, header));
     }
     
     @Test
     public void delete${entityName}() {
         String url = domain + "/${entityName?uncap_first}?id=";
-        System.out.println(HttpUtil.getInstance().sendDelete(url, null, header));
+        System.out.println(HttpDeleteUtil.getInstance().send(url, header));
         list${entityName}();
     }
     
