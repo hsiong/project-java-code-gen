@@ -43,6 +43,9 @@ public class CodeGenerate {
         // execute FreeMarker
         FreeMarkerUtil.executeFreeMarker(tableInfoBO, list);
 
+        System.out.println();
+        System.out.println(" proceed successfully  (ฅ´ω`ฅ) ");
+
     }
 
 

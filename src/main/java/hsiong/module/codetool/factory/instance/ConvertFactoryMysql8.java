@@ -17,15 +17,29 @@ import java.util.stream.Collectors;
 public class ConvertFactoryMysql8 implements ConvertFactory {
 
     /**
-     * init postgresConvertMap 
-     * https://www.educative.io/answers/how-to-initialize-a-static-map-in-java
-     * https://blog.csdn.net/xiaojuge/article/details/101628157
-     * https://www.cnblogs.com/pypua/articles/9907831.html
+     * init mysql8ConvertMap 
+     * 
      */
     private static final LinkedHashMap<String, String> mysql8ConvertMap;
     static {
         mysql8ConvertMap = new LinkedHashMap<>();
-
+        mysql8ConvertMap.put("date", JavaTypeConstant.JAVA_DATE);
+        mysql8ConvertMap.put("time", JavaTypeConstant.JAVA_TIME);
+        mysql8ConvertMap.put("timestamp without timezone", JavaTypeConstant.JAVA_DATE_TIME);
+        mysql8ConvertMap.put("timestamp with timezone", JavaTypeConstant.JAVA_DATE_TIME_OFFSET);
+        mysql8ConvertMap.put("character", JavaTypeConstant.JAVA_STRING);
+        mysql8ConvertMap.put("varchar", JavaTypeConstant.JAVA_STRING);
+        mysql8ConvertMap.put("text", JavaTypeConstant.JAVA_STRING);
+        mysql8ConvertMap.put("smallint", JavaTypeConstant.JAVA_INTEGER);
+        mysql8ConvertMap.put("integer", JavaTypeConstant.JAVA_INTEGER);
+        mysql8ConvertMap.put("bigint", JavaTypeConstant.JAVA_LONG);
+        mysql8ConvertMap.put("int2", JavaTypeConstant.JAVA_INTEGER);
+        mysql8ConvertMap.put("int4", JavaTypeConstant.JAVA_INTEGER);
+        mysql8ConvertMap.put("int8", JavaTypeConstant.JAVA_LONG);
+        mysql8ConvertMap.put("float4", JavaTypeConstant.JAVA_FLOAT);
+        mysql8ConvertMap.put("float8", JavaTypeConstant.JAVA_DOUBLE);
+        mysql8ConvertMap.put("numeric", JavaTypeConstant.JAVA_BIG_DECIMAL);
+        mysql8ConvertMap.put("bool", JavaTypeConstant.JAVA_BOOLEAN);
         
     }
 
@@ -39,6 +53,8 @@ public class ConvertFactoryMysql8 implements ConvertFactory {
     public List<TableStructureJavaBO> convertStructureToJava(List<TableStructureBO> list) {
         List<TableStructureJavaBO> javaBOList = list.stream().map(i -> {
             String dataType = i.getData_type();
+            System.out.println("dataType");
+            System.out.println(dataType);
             String javaDataType = convertMysql8StructureToJava(dataType);
             TableStructureJavaBO javaBO = new TableStructureJavaBO();
             BeanUtils.copyProperties(i, javaBO);

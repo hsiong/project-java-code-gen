@@ -14,6 +14,9 @@ public interface ConvertFactory {
      *
      * get SqlRet & parse ret to result TableStructureBO
      * 
+     * for the compatibility purpose 
+     * that some databases do not support the way getting table structure with SELECT SQL directly
+     * 
      * @param resultSet
      * @return
      * @throws SQLException
