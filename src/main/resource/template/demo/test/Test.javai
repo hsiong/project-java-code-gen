@@ -12,13 +12,15 @@ public class Test {
         String url = domain + "/${entityName?uncap_first}";
         String param = "  ";
         System.out.println(HttpPostUtil.getInstance().send(url, header, param));
+        listProjects();
     }
     
     @Test
     public void update${entityName}() {
         String url = domain + "/${entityName?uncap_first}";
         String param = "  ";
-        System.out.println(HttpUtil.getInstance().sendPut(url, param, header));
+        System.out.println(HttpPutUtil.getInstance().send(url, header, param));
+        listProjects();
     }
     
     @Test
