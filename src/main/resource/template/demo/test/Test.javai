@@ -10,14 +10,14 @@ public class Test {
     @Test
     public void save${entityName}() {
         String url = domain + "/${entityName?uncap_first}";
-        String param = " ";
+        String param = "  ";
         System.out.println(HttpPostUtil.getInstance().send(url, header, param));
     }
     
     @Test
     public void update${entityName}() {
         String url = domain + "/${entityName?uncap_first}";
-        String param = " ";
+        String param = "  ";
         System.out.println(HttpUtil.getInstance().sendPut(url, param, header));
     }
     
