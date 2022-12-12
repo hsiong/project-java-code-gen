@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ConvertFactoryPostgres implements ConvertFactory {
+public class ConvertFactoryMysql8 implements ConvertFactory {
 
     /**
      * init postgresConvertMap 
@@ -22,26 +22,10 @@ public class ConvertFactoryPostgres implements ConvertFactory {
      * https://blog.csdn.net/xiaojuge/article/details/101628157
      * https://www.cnblogs.com/pypua/articles/9907831.html
      */
-    private static final LinkedHashMap<String, String> postgresConvertMap;
+    private static final LinkedHashMap<String, String> mysql8ConvertMap;
     static {
-        postgresConvertMap = new LinkedHashMap<>();
-        postgresConvertMap.put("date", JavaTypeConstant.JAVA_DATE);
-        postgresConvertMap.put("time", JavaTypeConstant.JAVA_TIME);
-        postgresConvertMap.put("timestamp without timezone", JavaTypeConstant.JAVA_DATE_TIME);
-        postgresConvertMap.put("timestamp with timezone", JavaTypeConstant.JAVA_DATE_TIME_OFFSET);
-        postgresConvertMap.put("character", JavaTypeConstant.JAVA_STRING);
-        postgresConvertMap.put("varchar", JavaTypeConstant.JAVA_STRING);
-        postgresConvertMap.put("text", JavaTypeConstant.JAVA_STRING);
-        postgresConvertMap.put("smallint", JavaTypeConstant.JAVA_INTEGER);
-        postgresConvertMap.put("integer", JavaTypeConstant.JAVA_INTEGER);
-        postgresConvertMap.put("bigint", JavaTypeConstant.JAVA_LONG);
-        postgresConvertMap.put("int2", JavaTypeConstant.JAVA_INTEGER);
-        postgresConvertMap.put("int4", JavaTypeConstant.JAVA_INTEGER);
-        postgresConvertMap.put("int8", JavaTypeConstant.JAVA_LONG);
-        postgresConvertMap.put("float4", JavaTypeConstant.JAVA_FLOAT);
-        postgresConvertMap.put("float8", JavaTypeConstant.JAVA_DOUBLE);
-        postgresConvertMap.put("numeric", JavaTypeConstant.JAVA_BIG_DECIMAL);
-        postgresConvertMap.put("bool", JavaTypeConstant.JAVA_BOOLEAN);
+        mysql8ConvertMap = new LinkedHashMap<>();
+
         
     }
 
@@ -55,7 +39,7 @@ public class ConvertFactoryPostgres implements ConvertFactory {
     public List<TableStructureJavaBO> convertStructureToJava(List<TableStructureBO> list) {
         List<TableStructureJavaBO> javaBOList = list.stream().map(i -> {
             String dataType = i.getData_type();
-            String javaDataType = convertPostgresStructureToJava(dataType);
+            String javaDataType = convertMysql8StructureToJava(dataType);
             TableStructureJavaBO javaBO = new TableStructureJavaBO();
             BeanUtils.copyProperties(i, javaBO);
             javaBO.setJava_column_name(i.getColumn_name());
@@ -67,13 +51,13 @@ public class ConvertFactoryPostgres implements ConvertFactory {
 
     /**
      * convert Postgres sructure to Java 
-     * @param postgresDataType Postgres data type
+     * @param mysql8DataType Postgres data type
      * @return Java data type
      */
-    private String convertPostgresStructureToJava(String postgresDataType) {
-        for (Map.Entry<String, String> convertEntry : postgresConvertMap.entrySet()) {
+    private String convertMysql8StructureToJava(String mysql8DataType) {
+        for (Map.Entry<String, String> convertEntry : mysql8ConvertMap.entrySet()) {
             String key = convertEntry.getKey();
-            if (postgresDataType.contains(key)) {
+            if (mysql8DataType.contains(key)) {
                 return convertEntry.getValue();
             }
         }

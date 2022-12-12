@@ -4,7 +4,7 @@ import hsiong.module.codetool.factory.ConvertFactory;
 import hsiong.module.codetool.factory.instance.ConvertFactoryPostgres;
 import lombok.Getter;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -34,7 +34,7 @@ public enum DbEnum {
     MYSQL_8("mysql_8.xx", 
             "com.mysql.cj.jdbc.Driver", 
             "mysql", 
-            "",
+            "DESC :tableName",
             null
     );
 
@@ -74,6 +74,6 @@ public enum DbEnum {
      * @return
      */
     public static List<DbEnum> getSupportedDbEnumList() {
-        return Collections.singletonList(DbEnum.POSTGRESQL);
+        return Arrays.asList(DbEnum.POSTGRESQL, DbEnum.MYSQL_8);
     }
 }

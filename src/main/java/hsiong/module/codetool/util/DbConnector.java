@@ -14,7 +14,6 @@ import hsiong.module.codetool.constant.DbEnum;
 import hsiong.module.codetool.module.ParamBO;
 import hsiong.module.codetool.module.TableStructureBO;
 
-import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +56,7 @@ public class DbConnector {
             ResultSet resultSet = statement.executeQuery(queryTableSql);
             while (resultSet.next()) {
                 // only one column
-                TableStructureBO tableStructureBO = parseRet(resultSet, TableStructureBO.class);
+                TableStructureBO tableStructureBO = dbEnum.getConvertFactory().parseRet(resultSet);
                 boList.add(tableStructureBO);
             }
         } catch (SQLException e) {
@@ -71,59 +70,6 @@ public class DbConnector {
         return boList;
     }
 
-    /**
-     * 解析 ResultSet
-     * @param resultSet
-     * @param tClass
-     * @param <T>
-     * @return
-     * @apiNote https://docs.oracle.com/javase/tutorial/jdbc/basics/processingsqlstatements.html
-     */
-    private static <T> T parseRet(ResultSet resultSet, Class<T> tClass) throws SQLException {
-        T o = null;
-        try {
-            o = tClass.getDeclaredConstructor().newInstance();
-        } catch (Exception e) {
-            String msg = String.format("New Instance %s Error: %s", tClass.getName(), e.getMessage());
-            throw new IllegalArgumentException(msg);
-        }
-        Field[] fields = tClass.getDeclaredFields();
-        for (Field field : fields) {
-            field.setAccessible(true);
-            String fieldName = field.getName();
-            String fieldSqlName = camelToUnderline(fieldName);
-            Object value = resultSet.getObject(fieldSqlName);
-            try {
-                field.set(o, String.valueOf(value));
-            } catch (IllegalAccessException e) {
-                String msg = String.format("IllegalAccessException %s Error: %s", field.getName(), e.getMessage());
-                throw new IllegalArgumentException(msg);
-            }
-        }
 
-        return o;
-    }
-
-    /**
-     * 将驼峰命名转化成下划线
-     *
-     * @param param
-     * @return
-     */
-    private static String camelToUnderline(String param) {
-        if (param.length() < 3) {
-            return param.toLowerCase();
-        }
-        StringBuilder sb = new StringBuilder(param);
-        int temp = 0;//定位
-        //从第三个字符开始 避免命名不规范
-        for (int i = 2; i < param.length(); i++) {
-            if (Character.isUpperCase(param.charAt(i))) {
-                sb.insert(i + temp, "_");
-                temp += 1;
-            }
-        }
-        return sb.toString().toLowerCase();
-    }
 
 }
