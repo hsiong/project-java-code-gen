@@ -1,5 +1,6 @@
 package hsiong.module.codetool.factory;
 
+import hsiong.module.codetool.module.ParamBO;
 import hsiong.module.codetool.module.TableStructureBO;
 import hsiong.module.codetool.module.TableStructureJavaBO;
 
@@ -8,6 +9,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ConvertFactory {
+    
+    String getQueryStructSql(String sql, ParamBO paramBO);
 
     /**
      * https://docs.oracle.com/javase/tutorial/jdbc/basics/processingsqlstatements.html

@@ -52,7 +52,7 @@ public class DbConnector {
         List<TableStructureBO> boList = new ArrayList<>();
         String tableName = paramBO.getTableName();
         try (Statement statement = connection.createStatement()) {
-            String queryTableSql = dbEnum.getQueryStructureSql(tableName);
+            String queryTableSql = dbEnum.getQueryStructureSql(paramBO);
             ResultSet resultSet = statement.executeQuery(queryTableSql);
             while (resultSet.next()) {
                 // only one column

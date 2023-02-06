@@ -1,7 +1,9 @@
 package hsiong.module.codetool.factory.instance;
 
+import hsiong.module.codetool.constant.DbConstant;
 import hsiong.module.codetool.constant.JavaTypeConstant;
 import hsiong.module.codetool.factory.ConvertFactory;
+import hsiong.module.codetool.module.ParamBO;
 import hsiong.module.codetool.module.TableStructureBO;
 import hsiong.module.codetool.module.TableStructureJavaBO;
 import hsiong.module.codetool.util.CommonUtil;
@@ -41,6 +43,13 @@ public class ConvertFactoryMysql8 implements ConvertFactory {
         mysql8ConvertMap.put("numeric", JavaTypeConstant.JAVA_BIG_DECIMAL);
         mysql8ConvertMap.put("bool", JavaTypeConstant.JAVA_BOOLEAN);
         
+    }
+
+    @Override
+    public String getQueryStructSql(String queryStructureSql, ParamBO paramBO) {
+        queryStructureSql = queryStructureSql.replace(DbConstant.CONTANT_TABLE_NAME, paramBO.getTableName())
+                                             .replace(DbConstant.CONSTANT_SCHEME, paramBO.getDatabase());
+        return queryStructureSql;
     }
 
     @Override

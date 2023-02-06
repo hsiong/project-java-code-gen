@@ -3,6 +3,7 @@ package hsiong.module.codetool.constant;
 import hsiong.module.codetool.factory.ConvertFactory;
 import hsiong.module.codetool.factory.instance.ConvertFactoryMysql8;
 import hsiong.module.codetool.factory.instance.ConvertFactoryPostgres;
+import hsiong.module.codetool.module.ParamBO;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public enum DbEnum {
     MYSQL_8("mysql_8.xx", 
             "com.mysql.cj.jdbc.Driver", 
             "mysql", 
-            "SELECT t.TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME AS 'column_name', ORDINAL_POSITION AS 'ordinal_position', COLUMN_DEFAULT AS 'column_default', IS_NULLABLE AS 'is_nullable', DATA_TYPE AS 'data_type', CHARACTER_MAXIMUM_LENGTH AS 'character_maximum_length', CHARACTER_OCTET_LENGTH, NUMERIC_PRECISION AS 'numeric_precision', NUMERIC_SCALE AS 'numeric_scale', DATETIME_PRECISION, CHARACTER_SET_NAME, COLLATION_NAME, COLUMN_TYPE, COLUMN_KEY, EXTRA, PRIVILEGES, COLUMN_COMMENT AS 'column_description', GENERATION_EXPRESSION FROM information_schema.COLUMNS t WHERE TABLE_NAME = ':tableName'",
+            "SELECT t.TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME AS 'column_name', ORDINAL_POSITION AS 'ordinal_position', COLUMN_DEFAULT AS 'column_default', IS_NULLABLE AS 'is_nullable', DATA_TYPE AS 'data_type', CHARACTER_MAXIMUM_LENGTH AS 'character_maximum_length', CHARACTER_OCTET_LENGTH, NUMERIC_PRECISION AS 'numeric_precision', NUMERIC_SCALE AS 'numeric_scale', DATETIME_PRECISION, CHARACTER_SET_NAME, COLLATION_NAME, COLUMN_TYPE, COLUMN_KEY, EXTRA, PRIVILEGES, COLUMN_COMMENT AS 'column_description', GENERATION_EXPRESSION FROM information_schema.COLUMNS t WHERE TABLE_NAME = ':tableName'  AND TABLE_SCHEMA = ':scheme' ",
             ConvertFactoryMysql8.class
     );
 
@@ -65,9 +66,8 @@ public enum DbEnum {
      * @param tableName
      * @return return queryStructureSql 
      */
-    public String getQueryStructureSql(String tableName) {
-        queryStructureSql = queryStructureSql.replace(":tableName", tableName);
-        return queryStructureSql;
+    public String getQueryStructureSql(ParamBO paramBO) {
+        return convertFactory.getQueryStructSql(queryStructureSql, paramBO);
     }
 
     /**
