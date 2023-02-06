@@ -16,6 +16,8 @@
     </parent>
 
     <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <cn.hutool.version>5.5.8</cn.hutool.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <commons-io.version>2.8.0</commons-io.version>
