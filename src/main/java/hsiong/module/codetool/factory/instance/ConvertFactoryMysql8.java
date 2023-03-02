@@ -35,6 +35,7 @@ public class ConvertFactoryMysql8 implements ConvertFactory {
         mysql8ConvertMap.put("smallint", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("integer", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("bigint", JavaTypeConstant.JAVA_LONG);
+        mysql8ConvertMap.put("int", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("int2", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("int4", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("int8", JavaTypeConstant.JAVA_LONG);
