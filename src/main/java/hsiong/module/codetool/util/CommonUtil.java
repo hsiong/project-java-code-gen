@@ -6,8 +6,22 @@ import java.sql.SQLException;
 
 public class CommonUtil {
 
+    /**
+     * 判断字段为空
+     * @param str
+     * @return
+     */
     public static boolean isEmpty(String str) {
         return str == null || str.length() == 0;
+    }
+
+    /**
+     * 判断字段不为空
+     * @param str
+     * @return
+     */
+    public static boolean isNotEmpty(String str) {
+        return str != null && str.length() > 0;
     }
 
     /**

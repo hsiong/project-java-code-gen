@@ -39,7 +39,6 @@ public class CodeGenerate {
         // convert structure to java
         DbEnum dbEnum = paramBO.getDbEnum();
         List<TableStructureJavaBO> list = dbEnum.getConvertFactory().convertStructureToJava(stuctureBOList);
-
         // execute FreeMarker
         FreeMarkerUtil.executeFreeMarker(tableInfoBO, list);
 

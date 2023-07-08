@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>hsiong</groupId>
-    <artifactId>project-code-generate-jpa</artifactId>
+    <artifactId>project-code-generate</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1</version>
-    <name>project-code-generate-jpa</name>
+    <name>project-code-generate</name>
 
 
     <parent>
