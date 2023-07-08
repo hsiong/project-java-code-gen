@@ -43,6 +43,7 @@ public class ConvertFactoryMysql8 implements ConvertFactory {
         mysql8ConvertMap.put("float8", JavaTypeConstant.JAVA_DOUBLE);
         mysql8ConvertMap.put("numeric", JavaTypeConstant.JAVA_BIG_DECIMAL);
         mysql8ConvertMap.put("bool", JavaTypeConstant.JAVA_BOOLEAN);
+        mysql8ConvertMap.put("bit", JavaTypeConstant.JAVA_BOOLEAN);
         
     }
 
@@ -63,8 +64,9 @@ public class ConvertFactoryMysql8 implements ConvertFactory {
     public List<TableStructureJavaBO> convertStructureToJava(List<TableStructureBO> list) {
         List<TableStructureJavaBO> javaBOList = list.stream().map(i -> {
             String dataType = i.getData_type();
-            System.out.println("dataType");
-            System.out.println(dataType);
+            System.out.println("dataType: " + dataType);
+            System.out.println("dataName: " + i.getColumn_name());
+            System.out.println();
             String javaDataType = convertMysql8StructureToJava(dataType);
             TableStructureJavaBO javaBO = new TableStructureJavaBO();
             BeanUtils.copyProperties(i, javaBO);
