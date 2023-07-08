@@ -31,22 +31,30 @@ public class TableInfoBO {
     private String outputDir;
 
     /**
-     * 生成实体名, 可以为空
-     * default value: tableName -> camelize
+     * 生成实体名
+     * 若为null, default value: tableName -> camelize
      *
      * @return
      */
     private String entityName;
 
+    /**
+     * 实体描述
+     */
     private String entityDesc;
 
+    /**
+     * 表描述
+     */
     private String tableName;
 
-    public TableInfoBO(String basePackage, String packageName, String entityName, String entityDesc, String tableName) {
-        if (CommonUtil.isEmpty(entityName)) {
-            entityName = underlineToEntityName(tableName);
-        }
+    /**
+     * 忽略表前缀
+     */
+    private String ignoreTablePrefix;
 
+    public TableInfoBO(String basePackage, String packageName, String entityDesc, String tableName) {
+        
         if (CommonUtil.isEmpty(packageName)) {
             // default packageName is entityName.toLowerCase()
             packageName = this.getEntityName().toLowerCase();
@@ -57,13 +65,29 @@ public class TableInfoBO {
             // TODO: or perhaps using Table Comment ? 
             throw new IllegalArgumentException("Entity Desc Can't be null");
         }
-        this.entityName = entityName;
+
+        this.entityName = underlineToEntityName(tableName);
         this.packageName = packageName;
         this.basePackage = basePackage;
         this.entityDesc = entityDesc;
         this.tableName = tableName;
     }
-    
+
+    public TableInfoBO(String basePackage,
+                       String packageName,
+                       String entityDesc,
+                       String tableName,
+                       String ignoreTablePrefix) {
+
+        this(basePackage, packageName, entityDesc, tableName);
+        
+        if (CommonUtil.isNotEmpty(ignoreTablePrefix)) {
+            this.entityName = entityName.replaceFirst(ignoreTablePrefix, "");
+        }
+
+        this.ignoreTablePrefix = ignoreTablePrefix;
+    }
+
     /**
      * rewrite getOutputDir
      *
@@ -81,7 +105,12 @@ public class TableInfoBO {
             }
         }
 
-        this.outputDir = this.outputDir + File.separator + this.packageName.toLowerCase(Locale.ROOT);
+        String packageDir = this.outputDir + File.separator + this.packageName.toLowerCase(Locale.ROOT);
+        File packageFile = new File(packageDir);
+        if (!packageFile.exists()) {
+            packageFile.mkdirs();
+        }
+
         File file = new File(this.outputDir);
         if (!file.exists()) {
             file.mkdirs();
