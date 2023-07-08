@@ -1,0 +1,52 @@
+package ${basePackage}.${packageName}.dto;
+
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import lombok.EqualsAndHashCode;
+import com.alibaba.fastjson.annotation.JSONField;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+/**
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class ${entityName}SaveDTO {
+
+  <#list columns as po>
+        <#if po.java_column_name != 'id'
+            && po.java_column_name != 'createBy'
+            && po.java_column_name != 'createTime'
+            && po.java_column_name != 'delFlag'
+            && po.java_column_name != 'updateBy'
+            && po.java_column_name != 'updateTime'
+        >
+    /** ${po.column_description} */
+            <#if po.java_data_type =='java.util.Date'>
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+            </#if>
+    @ApiModelProperty(value = "${po.column_description}<#if po.column_description?contains('字典值')> ${po.column_name?lower_case}</#if><#if po.is_nullable == 'NO'> 不能为空</#if>"<#if po.is_nullable == 'NO'>, required = true</#if>)
+            <#if po.is_nullable == 'NO'>
+                <#if po.java_data_type=='java.lang.String'>
+    @NotBlank(message = "${po.column_description} 不能为空")
+                <#else>
+    @NotNull(message = "${po.column_description} 不能为空")
+                </#if>
+            </#if>
+    private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};
+
+        </#if>
+    </#list>
+
+
+}

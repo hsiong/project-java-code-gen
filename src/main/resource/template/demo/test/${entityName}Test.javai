@@ -1,0 +1,42 @@
+
+import http.HttpDeleteUtil;
+import http.HttpGetUtil;
+import http.HttpPostUtil;
+import http.HttpPutUtil;
+import org.junit.Test;
+
+/**
+* @See httpClient https://github.com/ynfy-tech/ynfy-tool-httpconnect
+*/
+public class ${entityName}Test extends BootInfo {
+    
+    @Test
+    public void save${entityName}() {
+        String url = domain + "/${entityName?uncap_first}";
+        String param = "  ";
+        System.out.println(HttpPostUtil.getInstance().send(url, header, param));
+        list${entityName}();
+    }
+    
+    @Test
+    public void update${entityName}() {
+        String url = domain + "/${entityName?uncap_first}";
+        String param = "  ";
+        System.out.println(HttpPutUtil.getInstance().send(url, header, param));
+        list${entityName}();
+    }
+    
+    @Test
+    public void list${entityName}() {
+        String url = domain + "/${entityName?uncap_first}";
+        System.out.println(HttpGetUtil.getInstance().send(url, header));
+    }
+    
+    @Test
+    public void delete${entityName}() {
+        String url = domain + "/${entityName?uncap_first}?id=";
+        System.out.println(HttpDeleteUtil.getInstance().send(url, header));
+        list${entityName}();
+    }
+    
+}

@@ -1,0 +1,84 @@
+package ${basePackage}.${packageName}.service.impl;
+
+
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
+import ${basePackage}.${packageName}.entity.${entityName}PO;
+
+import ${basePackage}.${packageName}.dto.${entityName}ListDTO;
+import ${basePackage}.${packageName}.dto.${entityName}SaveDTO;
+import ${basePackage}.${packageName}.dto.${entityName}UpdateDTO;
+import ${basePackage}.${packageName}.dto.${entityName}ListVO;
+import ${basePackage}.${packageName}.service.${entityName}Service;
+import ${basePackage}.${packageName}.mapper.${entityName}Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import cn.hutool.core.date.DateUtil;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.Date;
+
+/**
+ * 〈〉
+ *
+ * @author Hsiong
+ * @version 1.0.0
+ * @since 2022/8/17
+ */
+@Service
+public class ${entityName}ServiceImpl implements ${entityName}Service {
+    
+    @Autowired
+    private ${entityName}Mapper ${entityName?uncap_first}Mapper;
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void save(${entityName}SaveDTO dto) {
+        String serial = dto.getSerial();
+        List<${entityName}PO> ${entityName?uncap_first}List = ${entityName?uncap_first}Mapper.selectList(
+            new LambdaQueryWrapper<${entityName}PO>().eq(${entityName}PO::getInsName, serial)
+        );
+        if (ObjectUtil.isNotEmpty(${entityName?uncap_first}List)) {
+            throw new IllegalArgumentException("${entityDesc}已存在!" + serial);
+        }
+        ${entityName}PO ${entityName?uncap_first} = new ${entityName}PO();
+        BeanUtil.copyProperties(dto, ${entityName?uncap_first});
+        ${entityName?uncap_first}Mapper.insert(${entityName?uncap_first});
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void update(${entityName}UpdateDTO dto) {
+        String id = dto.getId();
+        ${entityName}PO entity = ${entityName?uncap_first}Mapper.selectById(id);
+        if (ObjectUtil.isEmpty(entity)) {
+            throw new IllegalArgumentException("${entityDesc}不存在! id: " + id);
+        }
+        BeanUtil.copyProperties(dto, entity);
+        ${entityName?uncap_first}Mapper.updateById(entity);
+    }
+    
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void delete(String id) {
+        ${entityName?uncap_first}Mapper.deleteById(id);
+    }
+    
+    @Override
+    public IPage<${entityName}ListVO> list(${entityName}ListDTO dto) {
+    
+        Page<${entityName}ListVO> page = new Page<>(dto.getPage(), dto.getRows());
+        String querySql = ReflectUtil.getSql("", dto);
+        
+        // fuzzy search
+        return ${entityName?uncap_first}Mapper.pageList(page, querySql);
+    }
+    
+
+}

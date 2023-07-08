@@ -1,0 +1,64 @@
+package ${basePackage}.${packageName}.controller;
+
+
+import ${basePackage}.${packageName}.bean.*;
+import ${basePackage}.${packageName}.service.${entityName}Service;
+
+import cn.ynbjx.frame.module.Result;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+/**
+ * 〈〉
+ *
+ * @author Hsiong
+ * @version 1.0.0
+ * @since 2022/8/1
+ */
+@RestController
+@RequestMapping("/${entityName?uncap_first}")
+public class ${entityName}Controller {
+    
+    @Autowired
+    private ${entityName}Service ${entityName?uncap_first}Service;
+
+    @GetMapping
+    @Operation(summary = "${entityDesc}列表分页", parameters = {
+        @Parameter(in = ParameterIn.QUERY, name = "page", description = " 第几页 ", required = true),
+        @Parameter(in = ParameterIn.QUERY, name = "rows", description = " 页大小 ", required = true),
+    })
+    public Result<IPage<${entityName}ListVO>> list(${entityName}ListDTO dto, 
+                                                            @RequestParam(value = "page") Integer page, 
+                                                            @RequestParam(value = "rows") Integer rows) {
+        return Result.ok(${entityName?uncap_first}Service.list(dto));
+    }
+
+    @Operation(summary = "保存${entityDesc}")
+    @PostMapping
+    public Result save(@Valid @RequestBody ${entityName}SaveDTO dto) {
+        ${entityName?uncap_first}Service.save(dto);
+        return Result.ok();
+    }
+
+    @Operation(summary = "更新${entityDesc}")
+    @PutMapping
+    public Result update(@Valid @RequestBody ${entityName}UpdateDTO dto) {
+        ${entityName?uncap_first}Service.update(dto);
+        return Result.ok();
+    }
+
+    @Operation(summary = "删除${entityDesc}")
+    @DeleteMapping
+    public Result delete(@RequestParam(value = "id", required = true) String id) {
+        ${entityName?uncap_first}Service.delete(id);
+        return Result.ok();
+    }
+
+
+}

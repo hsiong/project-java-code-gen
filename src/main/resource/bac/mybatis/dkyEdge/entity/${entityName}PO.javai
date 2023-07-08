@@ -1,0 +1,55 @@
+package ${basePackage}.${packageName}.entity;
+
+import cn.ynbjx.frame.module.BaseEntity;
+import lombok.Data;
+import java.time.*;
+
+import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
+import io.swagger.annotations.ApiModelProperty;
+
+import lombok.EqualsAndHashCode;
+import com.alibaba.fastjson.annotation.JSONField;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+import io.swagger.annotations.Api;
+
+/**
+ *
+ * @Inherited 这些注解都没有使用 @Inherited , 可以放心继承
+ * @date: 2021/11/30
+ * @version: 1.0
+ */
+@TableName("${tableName}")
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@Api(tags = {"${tableName}对象"})
+@Data
+public class ${entityName}PO extends BaseEntity implements Serializable {
+
+    <#list columns as po>
+        <#if po.java_column_name != 'id'
+            && po.java_column_name != 'createBy'
+            && po.java_column_name != 'createTime'
+            && po.java_column_name != 'delFlag'
+            && po.java_column_name != 'updateBy'
+            && po.java_column_name != 'updateTime'
+        >
+    /** ${po.column_description} */
+            <#if po.java_data_type =='java.util.Date'>
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+            </#if>
+    @ApiModelProperty(value = "${po.column_description}"<#if po.is_nullable == 'NO'>, required = true</#if>)
+    private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};
+
+        </#if>
+    </#list>
+    
+}

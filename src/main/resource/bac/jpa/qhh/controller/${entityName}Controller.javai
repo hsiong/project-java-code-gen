@@ -1,0 +1,68 @@
+package ${basePackage}.${packageName}.controller;
+
+
+import com.test.common.core.response.BaseRes;
+import com.test.common.core.response.ResPagingBody;
+import com.test.common.core.util.ResUtil;
+import ${basePackage}.${packageName}.dto.${entityName}ListDTO;
+import ${basePackage}.${packageName}.dto.${entityName}SaveDTO;
+import ${basePackage}.${packageName}.dto.${entityName}UpdateDTO;
+import ${basePackage}.${packageName}.dto.${entityName}ListVO;
+import ${basePackage}.${packageName}.service.${entityName}Service;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+/**
+ * 〈〉
+ *
+ * @author Hsiong
+ * @version 1.0.0
+ * @since 2022/8/1
+ */
+@Api(tags = {"${entityDesc}"})
+@RestController
+@RequestMapping("/${entityName?uncap_first}")
+public class ${entityName}Controller {
+    
+    @Autowired
+    private ${entityName}Service ${entityName?uncap_first}Service;
+
+    @ApiOperation(value = "${entityDesc}列表分页")
+    @GetMapping
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "pageNumber", value = "第几页", required = true, dataType = "int", paramType = "query"),
+        @ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int", paramType = "query")
+    })
+    public BaseRes<ResPagingBody<${entityName}ListVO>> list(${entityName}ListDTO dto, @RequestParam(value = "pageNumber") Integer pageNumber, @RequestParam(value = "pageSize") Integer pageSize) {
+        return ResUtil.success(${entityName?uncap_first}Service.list(dto));
+    }
+
+    @ApiOperation(value = "保存${entityDesc}")
+    @PostMapping
+    public BaseRes save(@Valid @RequestBody ${entityName}SaveDTO dto) {
+        ${entityName?uncap_first}Service.save(dto);
+        return ResUtil.success();
+    }
+
+    @ApiOperation(value = "更新${entityDesc}")
+    @PutMapping
+    public BaseRes update(@Valid @RequestBody ${entityName}UpdateDTO dto) {
+        ${entityName?uncap_first}Service.update(dto);
+        return ResUtil.success();
+    }
+
+    @ApiOperation(value = "删除${entityDesc}")
+    @DeleteMapping
+    public BaseRes delete(@RequestParam(value = "id", required = true) Long id) {
+        ${entityName?uncap_first}Service.delete(id);
+        return ResUtil.success();
+    }
+
+
+}

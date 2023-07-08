@@ -1,0 +1,13 @@
+package ${basePackage}.${packageName}.mapper;
+
+import ${basePackage}.${packageName}.entity.${entityName}PO;
+import ${basePackage}.${packageName}.dto.${entityName}ListVO;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.apache.ibatis.annotations.Param;
+
+public interface ${entityName}Mapper extends BaseMapper<${entityName}PO> {
+
+    IPage<${entityName}ListVO> pageList(IPage<${entityName}ListVO> page, @Param("sql") String sql);
+
+}

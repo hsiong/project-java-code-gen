@@ -1,0 +1,45 @@
+package ${basePackage}.${packageName}.service;
+
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ${basePackage}.${packageName}.dto.${entityName}ListDTO;
+import ${basePackage}.${packageName}.dto.${entityName}SaveDTO;
+import ${basePackage}.${packageName}.dto.${entityName}UpdateDTO;
+import ${basePackage}.${packageName}.dto.${entityName}ListVO;
+
+/**
+ * 〈〉
+ *
+ * @author Hsiong
+ * @version 1.0.0
+ * @since 2022/8/17
+ */
+public interface ${entityName}Service {
+
+    /**
+     * 保存新${entityDesc}
+     * @param dto
+     */
+    void save(${entityName}SaveDTO dto);
+
+    /**
+     * 更新${entityDesc}信息
+     * @param dto
+     */
+    void update(${entityName}UpdateDTO dto);
+
+    /**
+     * 删除${entityDesc}
+     * @param id
+     */
+    void delete(String id);
+
+    /**
+     * ${entityDesc}列表
+     * @param 
+     * @return
+     */
+    IPage<${entityName}ListVO> list(${entityName}ListDTO dto);
+    
+
+}

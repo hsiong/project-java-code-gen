@@ -1,0 +1,72 @@
+package ${basePackage}.${packageName}.controller;
+
+
+import ${basePackage}.${packageName}.dto.${entityName}ListDTO;
+import ${basePackage}.${packageName}.dto.${entityName}SaveDTO;
+import ${basePackage}.${packageName}.dto.${entityName}UpdateDTO;
+import ${basePackage}.${packageName}.dto.${entityName}ListVO;
+import ${basePackage}.${packageName}.service.${entityName}Service;
+
+import cn.ynbjx.frame.module.Result;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import io.swagger.annotations.Api;
+
+/**
+ * 〈〉
+ *
+ * @author Hsiong
+ * @version 1.0.0
+ * @since 2022/8/1
+ */
+@Api(tags = {"${entityDesc}"})
+@RestController
+@RequestMapping("/${entityName?uncap_first}")
+public class ${entityName}Controller {
+    
+    @Autowired
+    private ${entityName}Service ${entityName?uncap_first}Service;
+
+    @ApiOperation(value = "${entityDesc}列表分页")
+    @GetMapping
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "pageNo", value = "第几页", required = true, dataType = "int", paramType = "query"),
+        @ApiImplicitParam(name = "pageSize", value = "页大小", required = true, dataType = "int", paramType = "query")
+    })
+    public Result<IPage<${entityName}ListVO>> list(${entityName}ListDTO dto,  
+                                                   @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+                                                   @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        return Result.ok(${entityName?uncap_first}Service.list(dto));
+    }
+
+    @ApiOperation(value = "保存${entityDesc}")
+    @PostMapping
+    public Result save(@Valid @RequestBody ${entityName}SaveDTO dto) {
+        ${entityName?uncap_first}Service.save(dto);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "更新${entityDesc}")
+    @PutMapping
+    public Result update(@Valid @RequestBody ${entityName}UpdateDTO dto) {
+        ${entityName?uncap_first}Service.update(dto);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "删除${entityDesc}")
+    @DeleteMapping
+    public Result delete(@RequestParam(value = "id", required = true) String id) {
+        ${entityName?uncap_first}Service.delete(id);
+        return Result.ok();
+    }
+
+
+}
