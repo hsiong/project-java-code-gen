@@ -11,9 +11,8 @@ import hsiong.module.codetool.module.TableStructureJavaBO;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FreeMarkerUtil {
 
@@ -26,7 +25,7 @@ public class FreeMarkerUtil {
 
         try {
             // init freeMarker param
-            Map<String, Object> root = new HashMap<>();
+            LinkedHashMap<String, Object> root = new LinkedHashMap<>();
             root.put("columns", stuctureBOList);
             Class c = tableInfoBO.getClass();
             Field[] fields = c.getDeclaredFields();

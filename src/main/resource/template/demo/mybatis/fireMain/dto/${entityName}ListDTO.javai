@@ -1,0 +1,55 @@
+package ${basePackage}.${packageName}.dto;
+
+import lombok.Data;
+import java.time.*;
+
+import java.io.Serializable;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.jeecg.common.api.dto.PageBO;
+
+import lombok.EqualsAndHashCode;
+import com.alibaba.fastjson.annotation.JSONField;
+import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+/**
+ *
+ * @Inherited 这些注解都没有使用 @Inherited , 可以放心继承
+ * @date: 2021/11/30
+ * @version: 1.0
+ */
+@Data
+public class ${entityName}ListDTO extends PageBO implements Serializable {
+
+    <#list columns as po>
+        <#if po.java_column_name != 'id'
+            && po.java_column_name != 'createBy'
+            && po.java_column_name != 'createTime'
+            && po.java_column_name != 'delFlag'
+            && po.java_column_name != 'updateBy'
+            && po.java_column_name != 'updateTime'
+            && po.java_column_name != 'tenantId'
+        >
+    /** ${po.column_description} */
+            <#if po.java_data_type =='java.util.Date'>
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+            </#if>
+    @ApiModelProperty(value = "${po.column_description}")
+    private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};
+        </#if>
+        <#if po.java_column_name != 'id'
+            && po.java_column_name != 'createBy'
+            && po.java_column_name != 'createTime'
+            && po.java_column_name != 'delFlag'
+            && po.java_column_name != 'updateBy'
+            && po.java_column_name != 'updateTime'
+            && po.java_column_name != 'tenantId'
+        >
+        
+        </#if>
+    </#list>
+    
+}
