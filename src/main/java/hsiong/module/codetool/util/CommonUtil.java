@@ -25,7 +25,7 @@ public class CommonUtil {
     }
 
     /**
-     * 将驼峰命名转化成下划线
+     * 将驼峰命名转化成下划线, 
      *
      * @param param
      * @return
@@ -47,7 +47,11 @@ public class CommonUtil {
     }
 
     /**
-     * parse Result Ret
+     * https://docs.oracle.com/javase/tutorial/jdbc/basics/processingsqlstatements.html
+     * 
+     * get SqlRet & parse ret to tClass result 
+     * for the compatibility purpose, some databases do not support the way getting table structure with SELECT SQL directly
+     * 
      * @param resultSet statement.executeQuery Result
      * @param tClass parse Result Class
      * @param <T> ret type
@@ -66,6 +70,7 @@ public class CommonUtil {
         for (Field field : fields) {
             field.setAccessible(true);
             String fieldName = field.getName();
+            // transform field name from camel case to underline case, to ensure field name matches to db name
             String fieldSqlName = CommonUtil.camelToUnderline(fieldName);
             Object value = resultSet.getObject(fieldSqlName);
             try {

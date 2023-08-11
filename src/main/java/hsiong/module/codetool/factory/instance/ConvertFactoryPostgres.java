@@ -3,14 +3,11 @@ package hsiong.module.codetool.factory.instance;
 import hsiong.module.codetool.constant.DbConstant;
 import hsiong.module.codetool.constant.JavaTypeConstant;
 import hsiong.module.codetool.factory.ConvertFactory;
-import hsiong.module.codetool.module.ParamBO;
+import hsiong.module.codetool.module.ParamDTO;
 import hsiong.module.codetool.module.TableStructureBO;
 import hsiong.module.codetool.module.TableStructureJavaBO;
-import hsiong.module.codetool.util.CommonUtil;
 import org.springframework.beans.BeanUtils;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,17 +45,16 @@ public class ConvertFactoryPostgres implements ConvertFactory {
     }
 
     @Override
-    public String getQueryStructSql(String queryStructureSql, ParamBO paramBO) {
-        queryStructureSql = queryStructureSql.replace(DbConstant.CONTANT_TABLE_NAME, paramBO.getTableName());
+    public String getQueryStructSql(String queryStructureSql, ParamDTO paramDTO) {
+        queryStructureSql = queryStructureSql.replace(DbConstant.CONTANT_TABLE_NAME, paramDTO.getTableName());
         return queryStructureSql;
     }
 
     @Override
-    public TableStructureBO parseRet(ResultSet resultSet) throws SQLException {
-        TableStructureBO o = CommonUtil.parseResultRet(resultSet, TableStructureBO.class);
-        return o;
+    public String getQueryTableSql(String sql, ParamDTO paramDTO) {
+        throw new IllegalArgumentException("Operation not supported!");
     }
-
+    
     @Override
     public List<TableStructureJavaBO> convertStructureToJava(List<TableStructureBO> list) {
         List<TableStructureJavaBO> javaBOList = list.stream().map(i -> {

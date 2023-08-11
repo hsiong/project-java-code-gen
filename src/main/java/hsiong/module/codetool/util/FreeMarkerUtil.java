@@ -5,7 +5,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import hsiong.module.codetool.constant.RegConstant;
-import hsiong.module.codetool.module.TableInfoBO;
+import hsiong.module.codetool.module.TableInfoDTO;
 import hsiong.module.codetool.module.TableStructureJavaBO;
 
 import java.io.*;
@@ -18,32 +18,32 @@ public class FreeMarkerUtil {
 
     /**
      * 执行 freeMarker 文件, 生成代码
-     * @param tableInfoBO
+     * @param tableInfoDTO
      * @param stuctureBOList
      */
-    protected static void executeFreeMarker(TableInfoBO tableInfoBO, List<TableStructureJavaBO> stuctureBOList) {
+    protected static void executeFreeMarker(TableInfoDTO tableInfoDTO, List<TableStructureJavaBO> stuctureBOList) {
 
         try {
             // init freeMarker param
             LinkedHashMap<String, Object> root = new LinkedHashMap<>();
             root.put("columns", stuctureBOList);
-            Class c = tableInfoBO.getClass();
+            Class c = tableInfoDTO.getClass();
             Field[] fields = c.getDeclaredFields();
             for (Field field : fields) {
                 field.setAccessible(true);
                 String fieldName = field.getName();
-                Object filedValue = field.get(tableInfoBO);
+                Object filedValue = field.get(tableInfoDTO);
                 root.put(fieldName, filedValue);
             }
 
             // execute freeMarker
-            List<File> templateFiles = tableInfoBO.listTemplateFile();
-            String outputDir = tableInfoBO.getOutputDir();
-            String tempDir = tableInfoBO.getTemplateDir();
+            List<File> templateFiles = tableInfoDTO.listTemplateFile();
+            String outputDir = tableInfoDTO.getOutputDir();
+            String tempDir = tableInfoDTO.getTemplateDir();
             for (File templateFile : templateFiles) {
                 String fileDir = templateFile.getAbsolutePath()
                                              .replace(tempDir, "")
-                                             .replace("${entityName}", tableInfoBO.getEntityName())
+                                             .replace("${entityName}", tableInfoDTO.getEntityName())
                                              .replaceAll(RegConstant.FILE_REG, "");
                 String newFileDir = outputDir + fileDir;
                 File newFile = new File(newFileDir);

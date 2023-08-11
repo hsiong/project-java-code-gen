@@ -1,7 +1,7 @@
 /**
  * Copyright (C), 2006-2022,
  *
- * @FileName: ParamBO
+ * @FileName: ParamDTO
  * @Author: Hsiong
  * @Date: 2022/4/20 4:58 PM
  * @Description: History:
@@ -22,7 +22,7 @@ import lombok.Getter;
  * @since 1.0.0
  */
 @Getter
-public class ParamBO {
+public class ParamDTO {
 
     /**
      * dbEnum
@@ -77,7 +77,7 @@ public class ParamBO {
         this.dbUrl = url;
     }
 
-    public ParamBO(DbEnum dbEnum, String dbUrl, String user, String password, String database, String tableName) {
+    public ParamDTO(DbEnum dbEnum, String dbUrl, String user, String password, String database, String tableName) {
         setDbEnum(dbEnum);
         this.database = database;
         this.user = user;

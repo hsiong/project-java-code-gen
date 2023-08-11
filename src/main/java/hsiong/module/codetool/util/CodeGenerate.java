@@ -10,10 +10,11 @@ package hsiong.module.codetool.util; /**
  */
 
 import hsiong.module.codetool.constant.DbEnum;
-import hsiong.module.codetool.module.ParamBO;
-import hsiong.module.codetool.module.TableInfoBO;
+import hsiong.module.codetool.module.ParamDTO;
+import hsiong.module.codetool.module.TableInfoDTO;
 import hsiong.module.codetool.module.TableStructureBO;
 import hsiong.module.codetool.module.TableStructureJavaBO;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -28,19 +29,25 @@ public class CodeGenerate {
 
     /**
      * 生成代码文件
-     * @param paramBO
-     * @param tableInfoBO
+     * @param paramDTO
+     * @param tableInfoDTO
      */
-    public static void codeGenerate(ParamBO paramBO, TableInfoBO tableInfoBO) {
+    public static void codeGenerate(ParamDTO paramDTO, TableInfoDTO tableInfoDTO) {
+
+        String entityDesc = tableInfoDTO.getEntityDesc();
+        if (ObjectUtils.isEmpty(entityDesc)) { // if entityDesc is empty, get table comment
+            entityDesc = DbConnector.getTableComment(paramDTO);
+        }
+        tableInfoDTO.setEntityDesc(entityDesc);
 
         // get table structure
-        List<TableStructureBO> stuctureBOList = DbConnector.getDbInfo(paramBO);
+        List<TableStructureBO> stuctureBOList = DbConnector.getDbInfo(paramDTO);
 
         // convert structure to java
-        DbEnum dbEnum = paramBO.getDbEnum();
+        DbEnum dbEnum = paramDTO.getDbEnum();
         List<TableStructureJavaBO> list = dbEnum.getConvertFactory().convertStructureToJava(stuctureBOList);
         // execute FreeMarker
-        FreeMarkerUtil.executeFreeMarker(tableInfoBO, list);
+        FreeMarkerUtil.executeFreeMarker(tableInfoDTO, list);
 
         System.out.println();
         System.out.println(" proceed successfully  (ฅ´ω`ฅ) ");
