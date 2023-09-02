@@ -7,10 +7,10 @@ import hsiong.module.codetool.module.ParamDTO;
 import hsiong.module.codetool.module.TableStructureBO;
 import hsiong.module.codetool.module.TableStructureJavaBO;
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ConvertFactoryPostgres implements ConvertFactory {
@@ -26,6 +26,7 @@ public class ConvertFactoryPostgres implements ConvertFactory {
         postgresConvertMap = new LinkedHashMap<>();
         postgresConvertMap.put("date", JavaTypeConstant.JAVA_DATE);
         postgresConvertMap.put("time", JavaTypeConstant.JAVA_TIME);
+        postgresConvertMap.put("datetime", JavaTypeConstant.JAVA_DATE_TIME);
         postgresConvertMap.put("timestamp without timezone", JavaTypeConstant.JAVA_DATE_TIME);
         postgresConvertMap.put("timestamp with timezone", JavaTypeConstant.JAVA_DATE_TIME_OFFSET);
         postgresConvertMap.put("character", JavaTypeConstant.JAVA_STRING);
@@ -59,7 +60,10 @@ public class ConvertFactoryPostgres implements ConvertFactory {
     public List<TableStructureJavaBO> convertStructureToJava(List<TableStructureBO> list) {
         List<TableStructureJavaBO> javaBOList = list.stream().map(i -> {
             String dataType = i.getData_type();
-            String javaDataType = convertPostgresStructureToJava(dataType);
+            String javaDataType = postgresConvertMap.get(dataType);
+            if (ObjectUtils.isEmpty(javaDataType)) {
+                javaDataType= JavaTypeConstant.JAVA_STRING;
+            }
             TableStructureJavaBO javaBO = new TableStructureJavaBO();
             BeanUtils.copyProperties(i, javaBO);
             javaBO.setJava_column_name(i.getColumn_name());
@@ -69,18 +73,5 @@ public class ConvertFactoryPostgres implements ConvertFactory {
         return javaBOList;
     }
 
-    /**
-     * convert Postgres sructure to Java 
-     * @param postgresDataType Postgres data type
-     * @return Java data type
-     */
-    private String convertPostgresStructureToJava(String postgresDataType) {
-        for (Map.Entry<String, String> convertEntry : postgresConvertMap.entrySet()) {
-            String key = convertEntry.getKey();
-            if (postgresDataType.contains(key)) {
-                return convertEntry.getValue();
-            }
-        }
-        return JavaTypeConstant.JAVA_STRING;
-    }
+    
 }

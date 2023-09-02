@@ -7,10 +7,10 @@ import hsiong.module.codetool.module.ParamDTO;
 import hsiong.module.codetool.module.TableStructureBO;
 import hsiong.module.codetool.module.TableStructureJavaBO;
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ConvertFactoryMysql8 implements ConvertFactory {
@@ -24,6 +24,7 @@ public class ConvertFactoryMysql8 implements ConvertFactory {
         mysql8ConvertMap = new LinkedHashMap<>();
         mysql8ConvertMap.put("date", JavaTypeConstant.JAVA_DATE);
         mysql8ConvertMap.put("time", JavaTypeConstant.JAVA_TIME);
+        mysql8ConvertMap.put("datetime", JavaTypeConstant.JAVA_DATE_TIME);
         mysql8ConvertMap.put("timestamp without timezone", JavaTypeConstant.JAVA_DATE_TIME);
         mysql8ConvertMap.put("timestamp with timezone", JavaTypeConstant.JAVA_DATE_TIME_OFFSET);
         mysql8ConvertMap.put("character", JavaTypeConstant.JAVA_STRING);
@@ -32,6 +33,7 @@ public class ConvertFactoryMysql8 implements ConvertFactory {
         mysql8ConvertMap.put("smallint", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("integer", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("bigint", JavaTypeConstant.JAVA_LONG);
+        mysql8ConvertMap.put("tinyint", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("int", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("int2", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("int4", JavaTypeConstant.JAVA_INTEGER);
@@ -62,32 +64,26 @@ public class ConvertFactoryMysql8 implements ConvertFactory {
     public List<TableStructureJavaBO> convertStructureToJava(List<TableStructureBO> list) {
         List<TableStructureJavaBO> javaBOList = list.stream().map(i -> {
             String dataType = i.getData_type();
-            System.out.println("dataType: " + dataType);
-            System.out.println("dataName: " + i.getColumn_name());
-            System.out.println();
-            String javaDataType = convertMysql8StructureToJava(dataType);
+            
+            String javaDataType = mysql8ConvertMap.get(dataType);
+            if (ObjectUtils.isEmpty(javaDataType)) {
+                javaDataType= JavaTypeConstant.JAVA_STRING;
+            }
+            
             TableStructureJavaBO javaBO = new TableStructureJavaBO();
             BeanUtils.copyProperties(i, javaBO);
             javaBO.setJava_column_name(i.getColumn_name());
             javaBO.setJava_data_type(javaDataType);
+            
+            // TODO: log
+            System.out.println("dataName: " + i.getColumn_name());
+            System.out.println("dataType: " + dataType);
+            System.out.println("Java-dataType: " + javaDataType);
+            System.out.println();
+            
             return javaBO;
         }).collect(Collectors.toList());
         return javaBOList;
     }
-
-    /**
-     * convert Postgres sructure to Java
-     *
-     * @param mysql8DataType Postgres data type
-     * @return Java data type
-     */
-    private String convertMysql8StructureToJava(String mysql8DataType) {
-        for (Map.Entry<String, String> convertEntry : mysql8ConvertMap.entrySet()) {
-            String key = convertEntry.getKey();
-            if (mysql8DataType.contains(key)) {
-                return convertEntry.getValue();
-            }
-        }
-        return JavaTypeConstant.JAVA_STRING;
-    }
+    
 }
