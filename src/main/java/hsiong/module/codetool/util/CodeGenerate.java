@@ -54,7 +54,20 @@ public class CodeGenerate {
 
     }
 
+    /**
+     * 生成代码文件 - 多表
+     * @param paramDTO
+     * @param tableInfoDTO
+     * @param multiTableList 多个表
+     */
+    public static void codeGenerateMulti(ParamDTO paramDTO, TableInfoDTO tableInfoDTO, List<String> multiTableList) {
 
+        for (String mutiTable : multiTableList) {
+            paramDTO.setTableName(mutiTable);
+            codeGenerate(paramDTO, tableInfoDTO);
+        }
+
+    }
     
     
 
