@@ -28,12 +28,45 @@ import java.util.List;
 public class CodeGenerate {
 
     /**
-     * 生成代码文件
+     * 生成代码文件 - 单表
+     *
      * @param paramDTO
      * @param tableInfoDTO
      */
-    public static void codeGenerate(ParamDTO paramDTO, TableInfoDTO tableInfoDTO) {
+    public static void codeGenerateSingle(ParamDTO paramDTO, TableInfoDTO tableInfoDTO) {
+        
+        tableInfoDTO.clearOutDir();
 
+        codeGenerate(paramDTO, tableInfoDTO);
+
+    }
+
+    /**
+     * 生成代码文件 - 多表
+     *
+     * @param paramDTO
+     * @param tableInfoDTO
+     * @param multiTableList 多个表
+     */
+    public static void codeGenerateMulti(ParamDTO paramDTO, TableInfoDTO tableInfoDTO, List<String> multiTableList) {
+
+        tableInfoDTO.clearOutDir();
+
+        for (String mutiTable : multiTableList) {
+            paramDTO.setTableName(mutiTable);
+            codeGenerate(paramDTO, tableInfoDTO);
+        }
+
+    }
+
+    /**
+     * 生成代码文件
+     *
+     * @param paramDTO
+     * @param tableInfoDTO
+     */
+    private static void codeGenerate(ParamDTO paramDTO, TableInfoDTO tableInfoDTO) {
+        tableInfoDTO.setTableName(paramDTO.getTableName()); // Ensure tableName consistency between paramDTO & tableInfoDTO
         String entityDesc = tableInfoDTO.getEntityDesc();
         if (ObjectUtils.isEmpty(entityDesc)) { // if entityDesc is empty, get table comment
             entityDesc = DbConnector.getTableComment(paramDTO);
@@ -54,21 +87,5 @@ public class CodeGenerate {
 
     }
 
-    /**
-     * 生成代码文件 - 多表
-     * @param paramDTO
-     * @param tableInfoDTO
-     * @param multiTableList 多个表
-     */
-    public static void codeGenerateMulti(ParamDTO paramDTO, TableInfoDTO tableInfoDTO, List<String> multiTableList) {
-
-        for (String mutiTable : multiTableList) {
-            paramDTO.setTableName(mutiTable);
-            codeGenerate(paramDTO, tableInfoDTO);
-        }
-
-    }
-    
-    
 
 }

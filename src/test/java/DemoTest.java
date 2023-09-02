@@ -42,31 +42,33 @@ public class DemoTest {
 
         // 生成信息
         TableInfoDTO tableInfoBO = new TableInfoDTO("com.weishan", "result", "", paramBO.getTableName());
-        CodeGenerate.codeGenerate(paramBO, tableInfoBO);
+        CodeGenerate.codeGenerateSingle(paramBO, tableInfoBO);
 
     }
 
     /**
      * 忽略表前缀
      */
+    @Test
     public void ignoreTableEntityNameTest() {
         // 数据库链接信息
         ParamDTO paramBO = new ParamDTO(DbEnum.POSTGRESQL, "dbUrl", "user", "pwd", "database", "tableName");
 
         // 生成信息
-        TableInfoDTO tableInfoBO = new TableInfoDTO("com.weishan", "result", "", paramBO.getTableName(), "ignoreTablePrefix");
-        CodeGenerate.codeGenerate(paramBO, tableInfoBO);
+        TableInfoDTO tableInfoBO = new TableInfoDTO("com.weishan", "result", "", "ignoreTablePrefix");
+        CodeGenerate.codeGenerateSingle(paramBO, tableInfoBO);
     }
 
     /**
      * 多表测试
      */
+    @Test
     public void multiTest() {
         // 数据库链接信息
         ParamDTO paramBO = new ParamDTO(DbEnum.POSTGRESQL, "dbUrl", "user", "pwd", "database", "tableName");
 
         // 生成信息
-        TableInfoDTO tableInfoBO = new TableInfoDTO("com.weishan", "result", "", paramBO.getTableName(), "ignoreTablePrefix");
+        TableInfoDTO tableInfoBO = new TableInfoDTO("com.weishan", "result", "", "ignoreTablePrefix");
 
         List<String> multiTableList = Arrays.asList("table1", "table2");
         CodeGenerate.codeGenerateMulti(paramBO, tableInfoBO, multiTableList);

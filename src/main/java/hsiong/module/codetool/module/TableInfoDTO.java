@@ -3,7 +3,7 @@ package hsiong.module.codetool.module;
 import hsiong.module.codetool.annotation.GenNotEmpty;
 import hsiong.module.codetool.constant.RegConstant;
 import hsiong.module.codetool.util.CommonUtil;
-import lombok.Data;
+import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-@Data
+@Getter
 public class TableInfoDTO {
 
     @GenNotEmpty
@@ -53,33 +53,50 @@ public class TableInfoDTO {
      */
     private String ignoreTablePrefix;
 
-    public TableInfoDTO(String basePackage, String packageName, String entityDesc, String tableName) {
+    public TableInfoDTO(String basePackage, String packageName, String entityDesc) {
         
         if (CommonUtil.isEmpty(packageName)) {
             // default packageName is entityName.toLowerCase()
             packageName = this.getEntityName().toLowerCase();
         }
-
-        this.entityName = underlineToEntityName(tableName);
+        
         this.packageName = packageName;
         this.basePackage = basePackage;
         this.entityDesc = entityDesc;
-        this.tableName = tableName;
     }
 
     public TableInfoDTO(String basePackage,
                         String packageName,
                         String entityDesc,
-                        String tableName,
                         String ignoreTablePrefix) {
 
-        this(basePackage, packageName, entityDesc, tableName);
-        
+        this(basePackage, packageName, entityDesc);
+
+        this.ignoreTablePrefix = ignoreTablePrefix;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+        this.entityName = underlineToEntityName(tableName);
         if (CommonUtil.isNotEmpty(ignoreTablePrefix)) {
             this.entityName = entityName.replaceFirst(ignoreTablePrefix, "");
         }
+    }
 
-        this.ignoreTablePrefix = ignoreTablePrefix;
+    /**
+     * clear outDir
+     */
+    public void clearOutDir() {
+        if (CommonUtil.isEmpty(this.outputDir)) {
+            this.outputDir = getResourceDir() + "output";
+        }
+        // clear default output dir
+        Path path = Paths.get(this.outputDir);
+        try (Stream<Path> walk = Files.walk(path)) {
+            walk.sorted(Comparator.reverseOrder()).forEach(this::deleteDirectoryStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -88,16 +105,6 @@ public class TableInfoDTO {
      * @return 获取输出路径
      */
     public String getOutputDir() {
-        if (CommonUtil.isEmpty(this.outputDir)) {
-            this.outputDir = getResourceDir() + "output";
-            // clear default output dir
-            Path path = Paths.get(this.outputDir);
-            try (Stream<Path> walk = Files.walk(path)) {
-                walk.sorted(Comparator.reverseOrder()).forEach(this::deleteDirectoryStream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
         String packageDir = this.outputDir + File.separator + this.packageName.toLowerCase(Locale.ROOT);
         File packageFile = new File(packageDir);
@@ -201,4 +208,7 @@ public class TableInfoDTO {
         }
     }
 
+    public void setEntityDesc(String entityDesc) {
+        this.entityDesc = entityDesc;
+    }
 }
