@@ -85,6 +85,8 @@ public class ParamDTO {
         this.tableName = tableName;
         setDbUrl(dbUrl);
     }
-    
-    
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 }
