@@ -54,6 +54,7 @@ public class CodeGenerate {
 
         for (String mutiTable : multiTableList) {
             paramDTO.setTableName(mutiTable);
+            tableInfoDTO.setEntityDesc(null);
             codeGenerate(paramDTO, tableInfoDTO);
         }
 
