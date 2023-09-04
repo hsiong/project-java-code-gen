@@ -43,8 +43,8 @@ public class ${entityName}ListVO extends BaseEntity {
             </#if>
     @ApiModelProperty(value = "${po.column_description}<#if po.column_description?contains('字典值')> ${po.column_name?lower_case}</#if>")
     private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};
-
         </#if>
+        
     </#list>
 
 }

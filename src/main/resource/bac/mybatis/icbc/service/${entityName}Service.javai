@@ -2,12 +2,7 @@ package ${basePackage}.${packageName}.service;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import ${basePackage}.${packageName}.dto.${entityName}ListDTO;
-import ${basePackage}.${packageName}.dto.${entityName}SaveDTO;
-import ${basePackage}.${packageName}.dto.${entityName}UpdateDTO;
-import ${basePackage}.${packageName}.dto.${entityName}ListVO;
-import ${basePackage}.${packageName}.entity.${entityName}PO;
-import com.baomidou.mybatisplus.extension.service.IService;
+import ${basePackage}.${packageName}.bean.*;
 
 /**
  * 〈〉
@@ -16,7 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @version 1.0.0
  * @since 2022/8/17
  */
-public interface ${entityName}Service extends IService<${entityName}PO> {
+public interface ${entityName}Service {
 
     /**
      * 保存新${entityDesc}

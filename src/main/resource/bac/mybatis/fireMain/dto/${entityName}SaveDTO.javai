@@ -45,8 +45,8 @@ public class ${entityName}SaveDTO {
                 </#if>
             </#if>
     private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};
-
         </#if>
+        
     </#list>
 
 

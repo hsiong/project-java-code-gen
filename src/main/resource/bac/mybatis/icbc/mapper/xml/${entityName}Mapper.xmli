@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${basePackage}.${packageName}.mapper.${entityName}Mapper">
 
-    <select id="pageList" resultType="${basePackage}.${packageName}.dto.${entityName}ListVO">
+    <select id="pageList" resultType="${basePackage}.${packageName}.bean.${entityName}ListVO">
         SELECT * FROM ${tableName} a
         ${r'${sql}'}
         ORDER BY a.create_time DESC
