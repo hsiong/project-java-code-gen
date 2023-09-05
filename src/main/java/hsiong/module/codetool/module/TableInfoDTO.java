@@ -84,28 +84,21 @@ public class TableInfoDTO {
     }
 
     /**
-     * clear outDir
+     * init outDir
      */
-    public void clearOutDir() {
+    public void initOutDir() {
+        // clear default output dir
         if (CommonUtil.isEmpty(this.outputDir)) {
             this.outputDir = getResourceDir() + "output";
         }
-        // clear default output dir
         Path path = Paths.get(this.outputDir);
         try (Stream<Path> walk = Files.walk(path)) {
             walk.sorted(Comparator.reverseOrder()).forEach(this::deleteDirectoryStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    /**
-     * rewrite getOutputDir
-     *
-     * @return 获取输出路径
-     */
-    public String getOutputDir() {
-
+        // init outputDir
         String packageDir = this.outputDir + File.separator + this.packageName.toLowerCase(Locale.ROOT);
         File packageFile = new File(packageDir);
         if (!packageFile.exists()) {
@@ -116,7 +109,6 @@ public class TableInfoDTO {
         if (!file.exists()) {
             file.mkdirs();
         }
-        return this.outputDir;
     }
 
     /**
