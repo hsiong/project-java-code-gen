@@ -47,9 +47,8 @@ public class ${entityName}SaveDTO {
     @NotNull(message = "${po.column_description} 不能为空")
                 </#if>
             </#if>
-    private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};
+    private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};${'\n'}
         </#if>
-        
     </#list>
 
 

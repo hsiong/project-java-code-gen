@@ -41,9 +41,8 @@ public class ${entityName}ListVO extends BaseEntity {
     @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
             </#if>
     @Schema(description = "${po.column_description}")
-    private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};
+    private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};${'\n'}
         </#if>
-        
     </#list>
 
 }
