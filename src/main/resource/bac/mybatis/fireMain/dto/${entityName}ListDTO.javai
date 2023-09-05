@@ -39,8 +39,8 @@ public class ${entityName}ListDTO extends PageBO implements Serializable {
             </#if>
     @ApiModelProperty(value = "${po.column_description}")
     private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};
-
         </#if>
+        
     </#list>
     
 }

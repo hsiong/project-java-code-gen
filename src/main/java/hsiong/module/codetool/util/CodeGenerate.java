@@ -35,7 +35,7 @@ public class CodeGenerate {
      */
     public static void codeGenerateSingle(ParamDTO paramDTO, TableInfoDTO tableInfoDTO) {
         
-        tableInfoDTO.clearOutDir();
+        tableInfoDTO.initOutDir();
 
         codeGenerate(paramDTO, tableInfoDTO);
 
@@ -50,10 +50,11 @@ public class CodeGenerate {
      */
     public static void codeGenerateMulti(ParamDTO paramDTO, TableInfoDTO tableInfoDTO, List<String> multiTableList) {
 
-        tableInfoDTO.clearOutDir();
+        tableInfoDTO.initOutDir();
 
         for (String mutiTable : multiTableList) {
             paramDTO.setTableName(mutiTable);
+            tableInfoDTO.setEntityDesc(null);
             codeGenerate(paramDTO, tableInfoDTO);
         }
 

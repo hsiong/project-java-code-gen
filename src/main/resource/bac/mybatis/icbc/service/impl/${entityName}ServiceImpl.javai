@@ -3,17 +3,11 @@ package ${basePackage}.${packageName}.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
-import org.jeecg.common.util.ReflectUtil;
-
 import ${basePackage}.${packageName}.entity.${entityName}PO;
 
-import ${basePackage}.${packageName}.dto.${entityName}ListDTO;
-import ${basePackage}.${packageName}.dto.${entityName}SaveDTO;
-import ${basePackage}.${packageName}.dto.${entityName}UpdateDTO;
-import ${basePackage}.${packageName}.dto.${entityName}ListVO;
+import ${basePackage}.${packageName}.bean.*;
 import ${basePackage}.${packageName}.service.${entityName}Service;
 import ${basePackage}.${packageName}.mapper.${entityName}Mapper;
-import ${basePackage}.${packageName}.entity.${entityName}PO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +15,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import cn.hutool.core.date.DateUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +31,7 @@ import java.util.Date;
  * @since 2022/8/17
  */
 @Service
-public class ${entityName}ServiceImpl extends ServiceImpl<${entityName}Mapper, ${entityName}PO> implements ${entityName}Service {
+public class ${entityName}ServiceImpl implements ${entityName}Service {
     
     @Autowired
     private ${entityName}Mapper ${entityName?uncap_first}Mapper;
@@ -43,13 +39,13 @@ public class ${entityName}ServiceImpl extends ServiceImpl<${entityName}Mapper, $
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void save(${entityName}SaveDTO dto) {
-    //    String serial = dto.getSerial();
-    //    List<${entityName}PO> ${entityName?uncap_first}List = ${entityName?uncap_first}Mapper.selectList(
-    //        new LambdaQueryWrapper<${entityName}PO>().eq(${entityName}PO::getInsName, serial)
-    //    );
-    //    if (ObjectUtil.isNotEmpty(${entityName?uncap_first}List)) {
-    //        throw new IllegalArgumentException("${entityDesc}已存在!" + serial);
-    //    }
+        String serial = dto.getSerial();
+        List<${entityName}PO> ${entityName?uncap_first}List = ${entityName?uncap_first}Mapper.selectList(
+            new LambdaQueryWrapper<${entityName}PO>().eq(${entityName}PO::getInsName, serial)
+        );
+        if (ObjectUtil.isNotEmpty(${entityName?uncap_first}List)) {
+            throw new IllegalArgumentException("${entityDesc}已存在!" + serial);
+        }
         ${entityName}PO ${entityName?uncap_first} = new ${entityName}PO();
         BeanUtil.copyProperties(dto, ${entityName?uncap_first});
         ${entityName?uncap_first}Mapper.insert(${entityName?uncap_first});
@@ -76,7 +72,7 @@ public class ${entityName}ServiceImpl extends ServiceImpl<${entityName}Mapper, $
     @Override
     public IPage<${entityName}ListVO> list(${entityName}ListDTO dto) {
     
-        Page<${entityName}ListVO> page = new Page<>(dto.getPage(), dto.getRows());
+        Page<${entityName}PO> page = new Page<${entityName}PO>(dto.getPage(), dto.getRows());
         String querySql = ReflectUtil.getSql("", dto);
         
         // fuzzy search

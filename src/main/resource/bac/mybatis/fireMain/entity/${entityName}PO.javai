@@ -48,8 +48,8 @@ public class ${entityName}PO extends BaseEntity implements Serializable {
             </#if>
     @ApiModelProperty(value = "${po.column_description}"<#if po.is_nullable == 'NO'>, required = true</#if>)
     private <#if po.java_data_type=='java.lang.String'>String<#else>${po.java_data_type}</#if> ${po.java_column_name};
-
         </#if>
+        
     </#list>
     
 }
