@@ -72,7 +72,41 @@ public class TableInfoDTO {
 
         this(basePackage, packageName, entityDesc);
 
-        this.ignoreTablePrefix = ignoreTablePrefix;
+        this.ignoreTablePrefix = toCamelCase(ignoreTablePrefix);
+    }
+
+    /**
+     * toCamelCase && capitalize the first letter of a string 
+     * @param str
+     * @return
+     */
+    private String toCamelCase(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        StringBuilder camelCaseStr = new StringBuilder();
+        boolean makeNextUpperCase = false;
+
+        for (int i = 0; i < str.toCharArray().length; i++) {
+            char c = str.charAt(i);
+            
+            if (i == 0 && !Character.isSpaceChar(c)) {
+                camelCaseStr.append(Character.toUpperCase(c));
+                continue;
+            }
+            
+            if (Character.isSpaceChar(c)) {
+                makeNextUpperCase = true;
+            } else if (makeNextUpperCase) {
+                camelCaseStr.append(Character.toUpperCase(c));
+                makeNextUpperCase = false;
+            } else {
+                camelCaseStr.append(Character.toLowerCase(c));
+            }
+        }
+
+        return camelCaseStr.toString();
     }
 
     public void setTableName(String tableName) {
