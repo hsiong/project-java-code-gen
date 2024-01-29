@@ -38,8 +38,10 @@ public class ConvertFactoryMysql8 implements ConvertFactory {
         mysql8ConvertMap.put("int2", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("int4", JavaTypeConstant.JAVA_INTEGER);
         mysql8ConvertMap.put("int8", JavaTypeConstant.JAVA_LONG);
+        mysql8ConvertMap.put("float", JavaTypeConstant.JAVA_FLOAT);
         mysql8ConvertMap.put("float4", JavaTypeConstant.JAVA_FLOAT);
         mysql8ConvertMap.put("float8", JavaTypeConstant.JAVA_DOUBLE);
+        mysql8ConvertMap.put("double", JavaTypeConstant.JAVA_DOUBLE);
         mysql8ConvertMap.put("numeric", JavaTypeConstant.JAVA_BIG_DECIMAL);
         mysql8ConvertMap.put("bool", JavaTypeConstant.JAVA_BOOLEAN);
         mysql8ConvertMap.put("bit", JavaTypeConstant.JAVA_BOOLEAN);
