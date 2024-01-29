@@ -77,6 +77,14 @@ public class ParamDTO {
         this.dbUrl = url;
     }
 
+    public ParamDTO(DbEnum dbEnum, String dbUrl, String user, String password, String database) {
+        setDbEnum(dbEnum);
+        this.database = database;
+        this.user = user;
+        this.password = password;
+        setDbUrl(dbUrl);
+    }
+
     public ParamDTO(DbEnum dbEnum, String dbUrl, String user, String password, String database, String tableName) {
         setDbEnum(dbEnum);
         this.database = database;
