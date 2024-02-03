@@ -5,8 +5,8 @@ package hsiong.module.codetool.util; /**
  * @Author: hsiong
  * @Date: 2022/4/20 4:06 PM
  * @Description: History:
- * <author>      <time>      <version>      <desc>
- * 作者姓名       修改时间       版本号          描述
+ * <author>              <time>              <version>              <desc>
+ * 作者姓名               修改时间               版本号                  描述
  */
 
 import hsiong.module.codetool.constant.DbEnum;
@@ -27,66 +27,69 @@ import java.util.List;
  */
 public class CodeGenerate {
 
-    /**
-     * 生成代码文件 - 单表
-     *
-     * @param paramDTO
-     * @param tableInfoDTO
-     */
-    public static void codeGenerateSingle(ParamDTO paramDTO, TableInfoDTO tableInfoDTO) {
-    
-    tableInfoDTO.initOutDir();
+	/**
+	 * 生成代码文件 - 单表
+	 *
+	 * @param paramDTO
+	 * @param tableInfoDTO
+	 */
+	public static void codeGenerateSingle(ParamDTO paramDTO, TableInfoDTO tableInfoDTO) {
 
-    codeGenerate(paramDTO, tableInfoDTO);
+		tableInfoDTO.initOutDir();
 
-    }
+		codeGenerate(paramDTO, tableInfoDTO);
 
-    /**
-     * 生成代码文件 - 多表
-     *
-     * @param paramDTO
-     * @param tableInfoDTO
-     * @param multiTableList 多个表
-     */
-    public static void codeGenerateMulti(ParamDTO paramDTO, TableInfoDTO tableInfoDTO, List<String> multiTableList) {
+	}
 
-    tableInfoDTO.initOutDir();
+	/**
+	 * 生成代码文件 - 多表
+	 *
+	 * @param paramDTO
+	 * @param tableInfoDTO
+	 * @param multiTableList 多个表
+	 */
+	public static void codeGenerateMulti(ParamDTO paramDTO,
+										 TableInfoDTO tableInfoDTO,
+										 List<String> multiTableList) {
 
-    for (String mutiTable : multiTableList) {
-        paramDTO.setTableName(mutiTable);
-        tableInfoDTO.setEntityDesc(null);
-        codeGenerate(paramDTO, tableInfoDTO);
-    }
+		tableInfoDTO.initOutDir();
 
-    }
+		for (String mutiTable : multiTableList) {
+			paramDTO.setTableName(mutiTable);
+			tableInfoDTO.setEntityDesc(null);
+			codeGenerate(paramDTO, tableInfoDTO);
+		}
 
-    /**
-     * 生成代码文件
-     *
-     * @param paramDTO
-     * @param tableInfoDTO
-     */
-    private static void codeGenerate(ParamDTO paramDTO, TableInfoDTO tableInfoDTO) {
-    tableInfoDTO.setTableName(paramDTO.getTableName()); // Ensure tableName consistency between paramDTO & tableInfoDTO
-    String entityDesc = tableInfoDTO.getEntityDesc();
-    if (ObjectUtils.isEmpty(entityDesc)) { // if entityDesc is empty, get table comment
-        entityDesc = DbConnector.getTableComment(paramDTO);
-    }
-    tableInfoDTO.setEntityDesc(entityDesc);
+	}
 
-    // get table structure
-    List<TableStructureBO> stuctureBOList = DbConnector.getDbInfo(paramDTO);
+	/**
+	 * 生成代码文件
+	 *
+	 * @param paramDTO
+	 * @param tableInfoDTO
+	 */
+	private static void codeGenerate(ParamDTO paramDTO, TableInfoDTO tableInfoDTO) {
+		tableInfoDTO.setTableName(paramDTO.getTableName()); // Ensure tableName consistency between paramDTO & tableInfoDTO
+		String entityDesc = tableInfoDTO.getEntityDesc();
+		if (ObjectUtils.isEmpty(entityDesc)) { // if entityDesc is empty, get table comment
+			entityDesc = DbConnector.getTableComment(paramDTO);
+		}
+		tableInfoDTO.setEntityDesc(entityDesc);
 
-    // convert structure to java
-    DbEnum dbEnum = paramDTO.getDbEnum();
-    List<TableStructureJavaBO> list = dbEnum.getConvertFactory().convertStructureToJava(stuctureBOList);
-    // execute FreeMarker
-    FreeMarkerUtil.executeFreeMarker(tableInfoDTO, list);
+		// get table structure
+		List<TableStructureBO> stuctureBOList = DbConnector.getDbInfo(paramDTO);
 
-    System.out.println();
-    System.out.println(" proceed successfully  (ฅ´ω`ฅ) ");
+		// convert structure to java
+		DbEnum dbEnum = paramDTO.getDbEnum();
+		List<TableStructureJavaBO> list =
+			dbEnum.getConvertFactory().convertStructureToJava(stuctureBOList);
+		// execute FreeMarker
+		FreeMarkerUtil.executeFreeMarker(tableInfoDTO, list);
 
-    }
+		System.out.println();
+		System.out.println(" proceed successfully  (ฅ´ω`ฅ) ");
+
+	}
 
 
 }

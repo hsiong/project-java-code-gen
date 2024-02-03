@@ -5,8 +5,8 @@
  * @Author: Hsiong
  * @Date: 2022/4/21 11:40 AM
  * @Description: History:
- * <author>      <time>      <version>      <desc>
- * 作者姓名       修改时间       版本号          描述
+ * <author>              <time>              <version>              <desc>
+ * 作者姓名               修改时间               版本号                  描述
  */
 package hsiong.module.codetool.module;
 
@@ -22,16 +22,15 @@ import lombok.Data;
 @Data
 public class TableInfoBO {
 
-    /**
-     * 表名
-     */
-    private String table_name;
+	/**
+	 * 表名
+	 */
+	private String table_name;
 
-    /**
-     * 表注释
-     */
-    private String table_comment;
+	/**
+	 * 表注释
+	 */
+	private String table_comment;
 
-    
-    
+
 }
