@@ -5,8 +5,8 @@
  * @Author: Hsiong
  * @Date: 2022/4/21 11:40 AM
  * @Description: History:
- * <author>          <time>          <version>          <desc>
- * 作者姓名           修改时间           版本号              描述
+ * <author>      <time>      <version>      <desc>
+ * 作者姓名       修改时间       版本号          描述
  */
 package hsiong.module.codetool.module;
 

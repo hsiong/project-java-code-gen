@@ -5,8 +5,8 @@
  * @Author: Hsiong
  * @Date: 2022/4/20 4:58 PM
  * @Description: History:
- * <author>          <time>          <version>          <desc>
- * 作者姓名           修改时间           版本号              描述
+ * <author>      <time>      <version>      <desc>
+ * 作者姓名       修改时间       版本号          描述
  */
 package hsiong.module.codetool.module;
 
@@ -62,10 +62,10 @@ public class ParamDTO {
      * @param dbEnum dbEnum
      */
     private void setDbEnum(DbEnum dbEnum) {
-        if (!DbEnum.getSupportedDbEnumList().contains(dbEnum)) {
-            throw new IllegalArgumentException("NOT SUPPORT DATABASE");
-        }
-        this.dbEnum = dbEnum;
+    if (!DbEnum.getSupportedDbEnumList().contains(dbEnum)) {
+        throw new IllegalArgumentException("NOT SUPPORT DATABASE");
+    }
+    this.dbEnum = dbEnum;
     }
 
     /**
@@ -73,28 +73,28 @@ public class ParamDTO {
      * @param dbUrl dbUrl
      */
     private void setDbUrl(String dbUrl) {
-        String url = "jdbc:" + this.dbEnum.getDbType() + "://" + dbUrl + "/" + this.database;
-        this.dbUrl = url;
+    String url = "jdbc:" + this.dbEnum.getDbType() + "://" + dbUrl + "/" + this.database;
+    this.dbUrl = url;
     }
 
     public ParamDTO(DbEnum dbEnum, String dbUrl, String user, String password, String database) {
-        setDbEnum(dbEnum);
-        this.database = database;
-        this.user = user;
-        this.password = password;
-        setDbUrl(dbUrl);
+    setDbEnum(dbEnum);
+    this.database = database;
+    this.user = user;
+    this.password = password;
+    setDbUrl(dbUrl);
     }
 
     public ParamDTO(DbEnum dbEnum, String dbUrl, String user, String password, String database, String tableName) {
-        setDbEnum(dbEnum);
-        this.database = database;
-        this.user = user;
-        this.password = password;
-        this.tableName = tableName;
-        setDbUrl(dbUrl);
+    setDbEnum(dbEnum);
+    this.database = database;
+    this.user = user;
+    this.password = password;
+    this.tableName = tableName;
+    setDbUrl(dbUrl);
     }
 
     public void setTableName(String tableName) {
-        this.tableName = tableName;
+    this.tableName = tableName;
     }
 }

@@ -2,7 +2,7 @@
 a Code Generate tool for Java, based on JDBC & Freemarker
 
 ## 𝗧𝗲𝗰𝗸 𝗦𝘁𝗮𝗰𝗸
-|End                                                        |Stack                                                      |
+|End                            |Stack                              |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 |![Frontend](https://img.shields.io/badge/-Frontend-black?style=flat) |![Vue](https://img.shields.io/badge/-Vue-green?logo=vue.js)|
 |![Backend](https://img.shields.io/badge/-Backend-black?style=flat) |![Java](https://img.shields.io/badge/-JDBC-red?logo=JDBC) |

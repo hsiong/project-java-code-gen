@@ -5,8 +5,8 @@
  * @Author: Hsiong
  * @Date: 2022/4/21 11:40 AM
  * @Description: History:
- * <author>          <time>          <version>          <desc>
- * 作者姓名           修改时间           版本号              描述
+ * <author>      <time>      <version>      <desc>
+ * 作者姓名       修改时间       版本号          描述
  */
 package hsiong.module.codetool.module;
 
@@ -89,7 +89,7 @@ public class TableStructureJavaBO {
      * @param column_name table column_name
      */
     public void setJava_column_name(String column_name) {
-        this.java_column_name = underlineToCamel(column_name);
+    this.java_column_name = underlineToCamel(column_name);
     }
 
     /**
@@ -100,17 +100,17 @@ public class TableStructureJavaBO {
      * @return output
      */
     private String underlineToCamel(String param) {
-        String[] strings = param.split("_");
-        StringBuilder builder = new StringBuilder();
-        builder.append(strings[0]);
-        if (strings.length > 1) {
-            for (int i = 1; i < strings.length; i++) {
-                String temp = strings[i];
-                builder.append(Character.toUpperCase(temp.charAt(0)));
-                builder.append(temp, 1, temp.length());
-            }
+    String[] strings = param.split("_");
+    StringBuilder builder = new StringBuilder();
+    builder.append(strings[0]);
+    if (strings.length > 1) {
+        for (int i = 1; i < strings.length; i++) {
+        String temp = strings[i];
+        builder.append(Character.toUpperCase(temp.charAt(0)));
+        builder.append(temp, 1, temp.length());
         }
-        return builder.toString();
+    }
+    return builder.toString();
     }
 
 }

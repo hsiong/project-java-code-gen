@@ -5,8 +5,8 @@ package hsiong.module.codetool.util; /**
  * @Author: hsiong
  * @Date: 2022/4/20 4:06 PM
  * @Description: History:
- * <author>          <time>          <version>          <desc>
- * 作者姓名           修改时间           版本号              描述
+ * <author>      <time>      <version>      <desc>
+ * 作者姓名       修改时间       版本号          描述
  */
 
 import hsiong.module.codetool.constant.DbEnum;
@@ -34,10 +34,10 @@ public class CodeGenerate {
      * @param tableInfoDTO
      */
     public static void codeGenerateSingle(ParamDTO paramDTO, TableInfoDTO tableInfoDTO) {
-        
-        tableInfoDTO.initOutDir();
+    
+    tableInfoDTO.initOutDir();
 
-        codeGenerate(paramDTO, tableInfoDTO);
+    codeGenerate(paramDTO, tableInfoDTO);
 
     }
 
@@ -50,13 +50,13 @@ public class CodeGenerate {
      */
     public static void codeGenerateMulti(ParamDTO paramDTO, TableInfoDTO tableInfoDTO, List<String> multiTableList) {
 
-        tableInfoDTO.initOutDir();
+    tableInfoDTO.initOutDir();
 
-        for (String mutiTable : multiTableList) {
-            paramDTO.setTableName(mutiTable);
-            tableInfoDTO.setEntityDesc(null);
-            codeGenerate(paramDTO, tableInfoDTO);
-        }
+    for (String mutiTable : multiTableList) {
+        paramDTO.setTableName(mutiTable);
+        tableInfoDTO.setEntityDesc(null);
+        codeGenerate(paramDTO, tableInfoDTO);
+    }
 
     }
 
@@ -67,24 +67,24 @@ public class CodeGenerate {
      * @param tableInfoDTO
      */
     private static void codeGenerate(ParamDTO paramDTO, TableInfoDTO tableInfoDTO) {
-        tableInfoDTO.setTableName(paramDTO.getTableName()); // Ensure tableName consistency between paramDTO & tableInfoDTO
-        String entityDesc = tableInfoDTO.getEntityDesc();
-        if (ObjectUtils.isEmpty(entityDesc)) { // if entityDesc is empty, get table comment
-            entityDesc = DbConnector.getTableComment(paramDTO);
-        }
-        tableInfoDTO.setEntityDesc(entityDesc);
+    tableInfoDTO.setTableName(paramDTO.getTableName()); // Ensure tableName consistency between paramDTO & tableInfoDTO
+    String entityDesc = tableInfoDTO.getEntityDesc();
+    if (ObjectUtils.isEmpty(entityDesc)) { // if entityDesc is empty, get table comment
+        entityDesc = DbConnector.getTableComment(paramDTO);
+    }
+    tableInfoDTO.setEntityDesc(entityDesc);
 
-        // get table structure
-        List<TableStructureBO> stuctureBOList = DbConnector.getDbInfo(paramDTO);
+    // get table structure
+    List<TableStructureBO> stuctureBOList = DbConnector.getDbInfo(paramDTO);
 
-        // convert structure to java
-        DbEnum dbEnum = paramDTO.getDbEnum();
-        List<TableStructureJavaBO> list = dbEnum.getConvertFactory().convertStructureToJava(stuctureBOList);
-        // execute FreeMarker
-        FreeMarkerUtil.executeFreeMarker(tableInfoDTO, list);
+    // convert structure to java
+    DbEnum dbEnum = paramDTO.getDbEnum();
+    List<TableStructureJavaBO> list = dbEnum.getConvertFactory().convertStructureToJava(stuctureBOList);
+    // execute FreeMarker
+    FreeMarkerUtil.executeFreeMarker(tableInfoDTO, list);
 
-        System.out.println();
-        System.out.println(" proceed successfully  (ฅ´ω`ฅ) ");
+    System.out.println();
+    System.out.println(" proceed successfully  (ฅ´ω`ฅ) ");
 
     }
 
